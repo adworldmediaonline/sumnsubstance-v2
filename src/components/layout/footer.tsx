@@ -212,7 +212,7 @@ export default function Footer({ className = '' }: FooterProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Copyright */}
           <div className="text-center">
-            <p className="text-white/60 text-sm">© 2025, Rev Skin Store</p>
+            <p className="text-white/60 text-sm">© 2025, SumNSubstance</p>
           </div>
         </div>
       </div>
