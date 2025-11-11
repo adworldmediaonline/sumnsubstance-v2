@@ -6,7 +6,6 @@ import { Heart, Star, ShoppingBag, Minus, Plus, Share2 } from 'lucide-react';
 import type { SerializedProductWithCategory } from '@/lib/serializers';
 import type { ReviewAggregates } from '@/types/review';
 import { useAddItem } from '@/store/cart-store';
-import { toast } from 'sonner';
 
 interface FeaturedProduct extends SerializedProductWithCategory {
   // Additional frontend-only fields
@@ -48,7 +47,7 @@ export function FeaturedProductsClient({
     };
 
     addItem(cartProduct, quantity);
-    toast.success(`${product.name} added to cart!`);
+    // Floating cart will show visual feedback
 
     // Reset quantity for this product
     setQuantities(prev => ({ ...prev, [productId]: 1 }));

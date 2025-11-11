@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/accordion';
 import type { SerializedProductWithCategory } from '@/server/queries/product';
 import { useAddItem } from '@/store/cart-store';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
 import {
@@ -65,7 +64,7 @@ export default function ProductDetailsClient({
     };
 
     addItem(cartProduct, quantity);
-    toast.success(`${product.name} added to cart!`);
+    // Floating cart will show visual feedback
   };
 
   const handleBuyNow = () => {

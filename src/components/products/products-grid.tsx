@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { useAddItem } from '@/store/cart-store';
-import { toast } from 'sonner';
 import ProductCard from '@/components/products/product-card';
 import type { SerializedProductWithCategory } from '@/lib/serializers';
 import type { ReviewAggregates } from '@/types/review';
@@ -44,7 +43,7 @@ export default function ProductsGrid({
     };
 
     addItem(cartProduct, 1);
-    toast.success(`${product.name} added to cart!`);
+    // Floating cart will show visual feedback
   };
 
   return (

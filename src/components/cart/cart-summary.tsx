@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   ShoppingCart,
@@ -8,62 +8,25 @@ import {
   Shield,
   Truck,
   ArrowRight,
-  Tag,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import {
   useCartItems,
   useCartItemCount,
   useCartTotalPrice,
   useCartLoading,
 } from '@/store/cart-store';
-import { toast } from 'sonner';
 
 export function CartSummary() {
-  const [promoCode, setPromoCode] = useState('');
-  const [promoApplied, setPromoApplied] = useState(false);
-  const [isApplyingPromo, setIsApplyingPromo] = useState(false);
-
   const items = useCartItems();
   const count = useCartItemCount();
   const subtotal = useCartTotalPrice();
   const loading = useCartLoading();
 
   // Calculate total (GST and shipping managed from dashboard)
-  const discount = promoApplied ? Math.round(subtotal * 0.1) : 0; // 10% discount if promo applied
-  const total = subtotal - discount;
-
-  const handleApplyPromo = async () => {
-    if (!promoCode.trim()) {
-      toast.error('Please enter a promo code');
-      return;
-    }
-
-    setIsApplyingPromo(true);
-
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Mock promo code validation
-    if (promoCode.toUpperCase() === 'SAVE10') {
-      setPromoApplied(true);
-      toast.success('Promo code applied! You saved 10%');
-    } else {
-      toast.error('Invalid promo code');
-    }
-
-    setIsApplyingPromo(false);
-  };
-
-  const handleRemovePromo = () => {
-    setPromoApplied(false);
-    setPromoCode('');
-    toast.success('Promo code removed');
-  };
+  const total = subtotal;
 
   if (items.length === 0) {
     return null;
@@ -88,71 +51,12 @@ export function CartSummary() {
             <span>₹{subtotal.toLocaleString()}</span>
           </div>
 
-
-          {promoApplied && (
-            <div className="flex justify-between text-sm text-green-600">
-              <span className="flex items-center gap-1">
-                <Tag className="h-3 w-3" />
-                Discount (SAVE10)
-              </span>
-              <span>-₹{discount.toLocaleString()}</span>
-            </div>
-          )}
-
           <Separator />
 
           <div className="flex justify-between font-semibold text-lg">
             <span>Total</span>
             <span className="text-primary">₹{total.toLocaleString()}</span>
           </div>
-        </div>
-
-        {/* Promo Code Section */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Tag className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Promo Code</span>
-          </div>
-
-          {!promoApplied ? (
-            <div className="flex gap-2">
-              <Input
-                placeholder="Enter promo code"
-                value={promoCode}
-                onChange={e => setPromoCode(e.target.value)}
-                className="text-sm"
-                disabled={loading || isApplyingPromo}
-              />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleApplyPromo}
-                disabled={loading || isApplyingPromo || !promoCode.trim()}
-              >
-                {isApplyingPromo ? 'Applying...' : 'Apply'}
-              </Button>
-            </div>
-          ) : (
-            <div className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
-              <div className="flex items-center gap-2">
-                <Badge
-                  variant="secondary"
-                  className="bg-green-100 text-green-800"
-                >
-                  {promoCode.toUpperCase()}
-                </Badge>
-                <span className="text-sm text-green-700">Applied</span>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleRemovePromo}
-                className="text-green-700 hover:text-green-800"
-              >
-                Remove
-              </Button>
-            </div>
-          )}
         </div>
 
         {/* Checkout Buttons */}

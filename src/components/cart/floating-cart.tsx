@@ -7,12 +7,12 @@ import {
   useCartItems,
   useCartTotalPrice,
 } from '@/store/cart-store';
-import { ArrowRight, CheckCircle, ShoppingBag, X } from 'lucide-react';
+import { ArrowRight, CheckCircle, ShoppingBag } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export function FloatingCart() {
-  const { isVisible, dismiss, itemCount } = useFloatingCart();
+  const { isVisible, itemCount } = useFloatingCart();
   const items = useCartItems();
   const totalPrice = useCartTotalPrice();
   const [showSuccess, setShowSuccess] = useState(false);
@@ -37,17 +37,7 @@ export function FloatingCart() {
     }
   }, [isVisible, items.length, items]);
 
-  // Handle keyboard events
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isVisible) {
-        dismiss();
-      }
-    };
-
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [isVisible, dismiss]);
+  // Auto-hide functionality handled by hook
 
   if (items.length === 0) return null;
 
@@ -130,27 +120,17 @@ export function FloatingCart() {
                 <p className="text-[10px] text-gray-500">{itemCount} item{itemCount > 1 ? 's' : ''}</p>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-1">
-                <Button
-                  asChild
-                  size="sm"
-                  className="bg-primary hover:bg-primary/90 text-white h-8 px-3 text-xs"
-                  onClick={dismiss}
-                >
-                  <Link href="/cart" className="flex items-center gap-1">
-                    View Cart
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </Button>
-                <button
-                  onClick={dismiss}
-                  className="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center transition-colors text-gray-400 hover:text-gray-600"
-                  aria-label="Close cart"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
+              {/* Action Button */}
+              <Button
+                asChild
+                size="sm"
+                className="bg-primary hover:bg-primary/90 text-white h-8 px-3 text-xs flex-shrink-0"
+              >
+                <Link href="/cart" className="flex items-center gap-1">
+                  View Cart
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>

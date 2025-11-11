@@ -210,7 +210,7 @@ export function CartDropdown({ className, isScrolled }: { className?: string; is
               <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground mb-4">Your cart is empty</p>
               <Button asChild onClick={() => setIsOpen(false)} className="bg-primary hover:bg-primary/90">
-                <Link href="/products">Browse Products</Link>
+                <Link href="/">Browse Products</Link>
               </Button>
             </div>
           ) : (

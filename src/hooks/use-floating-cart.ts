@@ -18,21 +18,29 @@ export function useFloatingCart() {
 
   // Show floating cart when item is added
   useEffect(() => {
-    if (itemCount > lastItemCount && itemCount > 0) {
-      // New item added - show cart even if dismissed
+    if (itemCount > lastItemCount && itemCount > 0 && !isCartPage) {
+      // New item added - show cart temporarily
       setIsVisible(true);
       setIsDismissed(false);
+
+      // Auto-hide after 5 seconds
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setIsDismissed(true);
+      }, 5000);
+
+      setLastItemCount(itemCount);
+      return () => clearTimeout(timer);
     } else if (itemCount === 0) {
-      // Cart is empty - hide
+      // Cart is empty - hide and reset
       setIsVisible(false);
       setIsDismissed(false);
-    } else if (itemCount > 0 && !isDismissed && !isCartPage) {
-      // Cart has items and not dismissed - show
-      setIsVisible(true);
+      setLastItemCount(itemCount);
+    } else {
+      // Update last item count to stay in sync
+      setLastItemCount(itemCount);
     }
-
-    setLastItemCount(itemCount);
-  }, [itemCount, isDismissed, isCartPage, lastItemCount]);
+  }, [itemCount, isCartPage, lastItemCount]);
 
   // Hide when on cart/checkout page
   useEffect(() => {

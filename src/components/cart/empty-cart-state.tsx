@@ -36,7 +36,7 @@ export function EmptyCartState() {
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-4">
+          <div className="flex gap-4 flex-col">
             <Link href="/">
               <Button
                 size="lg"
@@ -49,7 +49,7 @@ export function EmptyCartState() {
             </Link>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link href="/products">
+              <Link href="/">
                 <Button
                   variant="outline"
                   size="default"
@@ -59,15 +59,7 @@ export function EmptyCartState() {
                 </Button>
               </Link>
 
-              <Link href="/categories">
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="w-full sm:w-auto"
-                >
-                  View Categories
-                </Button>
-              </Link>
+
             </div>
           </div>
 
