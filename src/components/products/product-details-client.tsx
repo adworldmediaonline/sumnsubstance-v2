@@ -3,7 +3,6 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { SerializedProductWithCategory } from '@/server/queries/product';
-import type { ReviewData, ReviewAggregates } from '@/types/review';
 import { useAddItem } from '@/store/cart-store';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -30,16 +29,8 @@ import 'swiper/css/navigation';
 
 export default function ProductDetailsClient({
   product,
-  reviews,
-  reviewAggregates,
-  canWriteReview,
-  isAuthenticated,
 }: {
   product: SerializedProductWithCategory;
-  reviews: ReviewData[];
-  reviewAggregates: ReviewAggregates;
-  canWriteReview: boolean;
-  isAuthenticated: boolean;
 }) {
   // Transform images into array format for gallery display (memoized to prevent re-renders)
   const allImages = useMemo(
@@ -384,11 +375,7 @@ export default function ProductDetailsClient({
                 { id: 'description', label: 'Description' },
                 { id: 'usage', label: 'How to Use' },
                 { id: 'ingredients', label: 'Ingredients' },
-                { id: 'reviews', label: `Reviews (${reviewAggregates.totalReviews})` },
-                { id: 'faq', label: 'FAQ' },
-              ]
-                .filter(tab => tab.id !== 'reviews' && tab.id !== 'faq')
-                .map(tab => (
+              ].map(tab => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
