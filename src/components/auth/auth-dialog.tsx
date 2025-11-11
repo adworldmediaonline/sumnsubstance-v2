@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { SignInForm } from './signin-form';
 import { SignUpForm } from './signup-form';
 import { VerifyEmailView } from './verify-email-view';
+import Link from 'next/link';
 
 interface AuthDialogProps {
   trigger: React.ReactNode;
@@ -127,13 +128,13 @@ export function AuthDialog({ trigger, defaultTab = 'signin' }: AuthDialogProps) 
               <div className="px-4 sm:px-6 pb-6 pt-2 border-t">
                 <p className="text-xs text-center text-gray-600 break-words">
                   By continuing, you agree to our{' '}
-                  <a href="#" className="underline text-primary hover:text-primary/80 transition-colors">
+                  <Link href="terms-conditions" className="underline text-primary hover:text-primary/80 transition-colors">
                     Terms of Service
-                  </a>{' '}
+                  </Link>{' '}
                   and{' '}
-                  <a href="#" className="underline text-primary hover:text-primary/80 transition-colors">
+                  <Link href="privacy-policy" className="underline text-primary hover:text-primary/80 transition-colors">
                     Privacy Policy
-                  </a>
+                  </Link>
                   .
                 </p>
               </div>
