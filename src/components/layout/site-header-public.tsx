@@ -97,45 +97,45 @@ export default function SiteHeaderPublic() {
               <NavigationMenuLink asChild>
                 <Link
                   href="/"
-                className={`${navigationMenuTriggerStyle()} transition-colors duration-300 font-medium ${isHomePage
-                  ? (isScrolled
-                    ? 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
-                    : 'text-white hover:text-white/80 bg-transparent hover:bg-white/10')
-                  : 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
-                  }`}
-              >
-                Home
-              </Link>
+                  className={`${navigationMenuTriggerStyle()} transition-colors duration-300 font-medium ${isHomePage
+                    ? (isScrolled
+                      ? 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
+                      : 'text-white hover:text-white/80 bg-transparent hover:bg-white/10')
+                    : 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
+                    }`}
+                >
+                  Home
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                href="/about"
-                className={`${navigationMenuTriggerStyle()} transition-colors duration-300 font-medium ${isHomePage
-                  ? (isScrolled
-                    ? 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
-                    : 'text-white hover:text-white/80 bg-transparent hover:bg-white/10')
-                  : 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
-                  }`}
-              >
-                About
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link
-                href="/contact"
-                className={`${navigationMenuTriggerStyle()} transition-colors duration-300 font-medium ${isHomePage
-                  ? (isScrolled
-                    ? 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
-                    : 'text-white hover:text-white/80 bg-transparent hover:bg-white/10')
-                  : 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
-                  }`}
-              >
-                Contact
-              </Link>
+                  href="/about"
+                  className={`${navigationMenuTriggerStyle()} transition-colors duration-300 font-medium ${isHomePage
+                    ? (isScrolled
+                      ? 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
+                      : 'text-white hover:text-white/80 bg-transparent hover:bg-white/10')
+                    : 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
+                    }`}
+                >
+                  About
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/contact"
+                  className={`${navigationMenuTriggerStyle()} transition-colors duration-300 font-medium ${isHomePage
+                    ? (isScrolled
+                      ? 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
+                      : 'text-white hover:text-white/80 bg-transparent hover:bg-white/10')
+                    : 'text-primary hover:text-primary/80 bg-transparent hover:bg-muted'
+                    }`}
+                >
+                  Contact
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -285,12 +285,12 @@ export default function SiteHeaderPublic() {
                   {session && (
                     <div className="mb-6 p-4 bg-white/10 backdrop-blur-sm rounded-lg">
                       <div className="flex items-center gap-3">
-                      <Avatar className="h-12 w-12">
-                        <AvatarImage src={session.user.image ?? ''} alt={''} />
-                        <AvatarFallback className="bg-white text-primary font-semibold">
-                          {session.user.initials ?? ''}
-                        </AvatarFallback>
-                      </Avatar>
+                        <Avatar className="h-12 w-12">
+                          <AvatarImage src={session.user.image ?? ''} alt={''} />
+                          <AvatarFallback className="bg-white text-primary font-semibold">
+                            {session.user.initials ?? ''}
+                          </AvatarFallback>
+                        </Avatar>
                         <div>
                           <p className="text-white font-medium">{session.user.name}</p>
                           <p className="text-white/70 text-sm">{session.user.email}</p>

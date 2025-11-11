@@ -405,20 +405,7 @@ export default function Header({
                         >
                           <span>Home</span>
                         </Link>
-                        <Link
-                          href="/products"
-                          className="flex items-center space-x-3 text-lg font-medium py-2 hover:text-primary transition-colors"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <span>Products</span>
-                        </Link>
-                        <Link
-                          href="/categories"
-                          className="flex items-center space-x-3 text-lg font-medium py-2 hover:text-primary transition-colors"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <span>Categories</span>
-                        </Link>
+
                         <Link
                           href="/about"
                           className="flex items-center space-x-3 text-lg font-medium py-2 hover:text-primary transition-colors"

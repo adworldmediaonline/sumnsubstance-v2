@@ -233,12 +233,12 @@ export default function SiteHeaderStandard() {
                   {session && (
                     <div className="mb-6 p-4 bg-white/10 backdrop-blur-sm rounded-lg">
                       <div className="flex items-center gap-3">
-                      <Avatar className="h-12 w-12">
-                        <AvatarImage src={session.user.image ?? ''} alt={''} />
-                        <AvatarFallback className="bg-white text-primary font-semibold">
-                          {session.user.initials ?? ''}
-                        </AvatarFallback>
-                      </Avatar>
+                        <Avatar className="h-12 w-12">
+                          <AvatarImage src={session.user.image ?? ''} alt={''} />
+                          <AvatarFallback className="bg-white text-primary font-semibold">
+                            {session.user.initials ?? ''}
+                          </AvatarFallback>
+                        </Avatar>
                         <div>
                           <p className="text-white font-medium">{session.user.name}</p>
                           <p className="text-white/70 text-sm">{session.user.email}</p>
