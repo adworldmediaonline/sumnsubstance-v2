@@ -2,6 +2,12 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import type { SerializedProductWithCategory } from '@/server/queries/product';
 import { useAddItem } from '@/store/cart-store';
 import { toast } from 'sonner';
@@ -40,7 +46,6 @@ export default function ProductDetailsClient({
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState('description');
   const [showStickyCart, setShowStickyCart] = useState(false);
   const [showImageZoom, setShowImageZoom] = useState(false);
 
@@ -289,12 +294,11 @@ export default function ProductDetailsClient({
 
             {/* Price - Mobile optimized */}
             <div className="bg-gray-50 rounded-xl p-4">
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3">
                 <span className="text-2xl lg:text-3xl font-bold text-primary">
                   ₹{product.price}
                 </span>
               </div>
-              <p className="text-xs text-gray-600">Inclusive of all taxes</p>
             </div>
 
             {/* Key Benefits / Why You'll Love It - Mobile optimized */}
@@ -362,108 +366,60 @@ export default function ProductDetailsClient({
 
                 {/* Wishlist & Share - Mobile optimized */}
               </div>
+
+              {/* Product Details Accordion */}
+              <div className="mt-6 lg:mt-8">
+                <h3 className="text-lg lg:text-xl font-bold text-primary mb-4">
+                  Product Details
+                </h3>
+                <Accordion type="single" collapsible className="w-full space-y-2">
+                  {/* Description */}
+                  {product.description && (
+                    <AccordionItem value="description" className="border border-gray-200 rounded-lg px-4">
+                      <AccordionTrigger className="text-primary hover:text-primary/80 font-semibold text-sm lg:text-base hover:no-underline">
+                        Description
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div
+                          className="text-gray-700 leading-relaxed text-sm lg:text-base prose prose-sm max-w-none pt-2"
+                          dangerouslySetInnerHTML={{ __html: product.description }}
+                        />
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+
+                  {/* How to Use */}
+                  {product.howToUse && (
+                    <AccordionItem value="usage" className="border border-gray-200 rounded-lg px-4">
+                      <AccordionTrigger className="text-primary hover:text-primary/80 font-semibold text-sm lg:text-base hover:no-underline">
+                        How to Use
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div
+                          className="text-gray-700 leading-relaxed text-sm lg:text-base prose prose-sm max-w-none pt-2"
+                          dangerouslySetInnerHTML={{ __html: product.howToUse }}
+                        />
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+
+                  {/* Ingredients */}
+                  {product.ingredients && (
+                    <AccordionItem value="ingredients" className="border border-gray-200 rounded-lg px-4">
+                      <AccordionTrigger className="text-primary hover:text-primary/80 font-semibold text-sm lg:text-base hover:no-underline">
+                        Ingredients
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div
+                          className="text-gray-700 leading-relaxed text-sm lg:text-base prose prose-sm max-w-none pt-2"
+                          dangerouslySetInnerHTML={{ __html: product.ingredients }}
+                        />
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+                </Accordion>
+              </div>
             </div>
-          </div>
-        </div>
-
-        {/* Product Details Tabs */}
-        <div className="mb-8 lg:mb-12">
-          {/* Mobile Tab Navigation */}
-          <div className="border-b border-gray-200 mb-6 lg:mb-8 overflow-x-auto">
-            <nav className="flex space-x-1 lg:space-x-8 min-w-max lg:min-w-0">
-              {[
-                { id: 'description', label: 'Description' },
-                { id: 'usage', label: 'How to Use' },
-                { id: 'ingredients', label: 'Ingredients' },
-              ].map(tab => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`py-3 lg:py-4 px-4 lg:px-2 border-b-2 font-medium text-sm lg:text-base transition-colors whitespace-nowrap touch-manipulation ${activeTab === tab.id
-                      ? 'border-primary text-primary'
-                      : 'border-transparent text-gray-500 hover:text-gray-700'
-                      }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-            </nav>
-          </div>
-
-          <div className="max-w-4xl">
-            {activeTab === 'description' && (
-              <div className="space-y-4 lg:space-y-6">
-                {product.description && (
-                  <div>
-                    <h3 className="text-xl lg:text-2xl font-bold text-primary mb-3 lg:mb-4">
-                      Product Description
-                    </h3>
-                    <div
-                      className="text-gray-700 leading-relaxed mb-4 lg:mb-6 text-sm lg:text-base prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: product.description }}
-                    />
-                  </div>
-                )}
-
-                {product.whyLoveIt && (
-                  <div>
-                    <h4 className="text-base lg:text-lg font-semibold text-primary mb-3">
-                      Why You'll Love It
-                    </h4>
-                    <div
-                      className="text-gray-700 text-sm lg:text-base prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: product.whyLoveIt }}
-                    />
-                  </div>
-                )}
-
-                {product.whatsInside && (
-                  <div>
-                    <h4 className="text-base lg:text-lg font-semibold text-primary mb-3">
-                      What's Inside
-                    </h4>
-                    <div
-                      className="text-gray-700 leading-relaxed text-sm lg:text-base prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: product.whatsInside }}
-                    />
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === 'usage' && (
-              <div>
-                <h3 className="text-xl lg:text-2xl font-bold text-primary mb-3 lg:mb-4">
-                  How to Use
-                </h3>
-                {product.howToUse ? (
-                  <div className="bg-[#ffffff]/10 rounded-xl lg:rounded-2xl p-4 lg:p-6">
-                    <div
-                      className="text-gray-700 leading-relaxed text-sm lg:text-base prose prose-sm max-w-none"
-                      dangerouslySetInnerHTML={{ __html: product.howToUse }}
-                    />
-                  </div>
-                ) : (
-                  <p className="text-gray-600 text-sm">Usage instructions will be available soon.</p>
-                )}
-              </div>
-            )}
-
-            {activeTab === 'ingredients' && (
-              <div>
-                <h3 className="text-xl lg:text-2xl font-bold text-primary mb-3 lg:mb-4">
-                  Ingredients
-                </h3>
-                {product.ingredients ? (
-                  <div
-                    className="text-gray-700 leading-relaxed text-sm lg:text-base prose prose-sm max-w-none"
-                    dangerouslySetInnerHTML={{ __html: product.ingredients }}
-                  />
-                ) : (
-                  <p className="text-gray-600 text-sm">Ingredient information will be available soon.</p>
-                )}
-              </div>
-            )}
           </div>
         </div>
 
