@@ -1,10 +1,7 @@
 'use client';
 
-import ProductReviews from '@/components/products/product-reviews';
-import RelatedProducts from '@/components/products/RelatedProducts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { mockRelatedProducts } from '@/constants/product-mock-data';
 import type { SerializedProductWithCategory } from '@/server/queries/product';
 import type { ReviewData, ReviewAggregates } from '@/types/review';
 import { useAddItem } from '@/store/cart-store';
@@ -12,14 +9,12 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
 import {
-  CheckCircle,
   ChevronLeft,
   ChevronRight,
   Minus,
   Plus,
   ShoppingCart,
   Sparkles,
-  Star,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -131,9 +126,8 @@ export default function ProductDetailsClient({
             {/* Main Image */}
             <div className="relative w-full aspect-square bg-gray-50 rounded-2xl lg:rounded-3xl overflow-hidden group">
               <div
-                className={`relative w-full h-full transition-transform duration-300 ${
-                  showImageZoom ? 'scale-150' : 'group-hover:scale-105'
-                }`}
+                className={`relative w-full h-full transition-transform duration-300 ${showImageZoom ? 'scale-150' : 'group-hover:scale-105'
+                  }`}
                 onClick={() => setShowImageZoom(!showImageZoom)}
               >
                 <Image
@@ -186,11 +180,10 @@ export default function ProductDetailsClient({
                   >
                     <button
                       onClick={() => setSelectedImageIndex(index)}
-                      className={`w-full h-full rounded-lg overflow-hidden border-2 transition-all duration-300 touch-manipulation relative ${
-                        selectedImageIndex === index
-                          ? 'border-primary shadow-sm scale-105'
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
+                      className={`w-full h-full rounded-lg overflow-hidden border-2 transition-all duration-300 touch-manipulation relative ${selectedImageIndex === index
+                        ? 'border-primary shadow-sm scale-105'
+                        : 'border-gray-200 hover:border-gray-300'
+                        }`}
                     >
                       <Image
                         src={image?.url || ''}
@@ -249,11 +242,10 @@ export default function ProductDetailsClient({
                   <SwiperSlide key={index} className="!w-20 !h-20">
                     <button
                       onClick={() => setSelectedImageIndex(index)}
-                      className={`w-full h-full rounded-lg overflow-hidden border-2 transition-all relative ${
-                        selectedImageIndex === index
-                          ? 'border-primary shadow-sm'
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
+                      className={`w-full h-full rounded-lg overflow-hidden border-2 transition-all relative ${selectedImageIndex === index
+                        ? 'border-primary shadow-sm'
+                        : 'border-gray-200 hover:border-gray-300'
+                        }`}
                     >
                       <Image
                         src={image?.url || ''}
@@ -297,32 +289,6 @@ export default function ProductDetailsClient({
                   {product.tagline}
                 </p>
               )}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.round(reviewAggregates.averageRating)
-                          ? 'text-yellow-500 fill-current'
-                          : 'text-gray-300'
-                      }`}
-                    />
-                  ))}
-                  <span className="text-gray-600 ml-2 text-sm">
-                    {reviewAggregates.averageRating > 0
-                      ? `${reviewAggregates.averageRating.toFixed(1)} (${reviewAggregates.totalReviews} reviews)`
-                      : 'No reviews yet'}
-                  </span>
-                </div>
-                <Badge
-                  variant="outline"
-                  className="text-green-600 border-green-600 w-fit text-xs"
-                >
-                  <CheckCircle className="w-3 h-3 mr-1" />
-                  In Stock
-                </Badge>
-              </div>
               {product.excerpt && (
                 <p className="text-gray-600 text-sm lg:text-base leading-relaxed">
                   {product.excerpt}
@@ -420,19 +386,20 @@ export default function ProductDetailsClient({
                 { id: 'ingredients', label: 'Ingredients' },
                 { id: 'reviews', label: `Reviews (${reviewAggregates.totalReviews})` },
                 { id: 'faq', label: 'FAQ' },
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`py-3 lg:py-4 px-4 lg:px-2 border-b-2 font-medium text-sm lg:text-base transition-colors whitespace-nowrap touch-manipulation ${
-                    activeTab === tab.id
+              ]
+                .filter(tab => tab.id !== 'reviews' && tab.id !== 'faq')
+                .map(tab => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`py-3 lg:py-4 px-4 lg:px-2 border-b-2 font-medium text-sm lg:text-base transition-colors whitespace-nowrap touch-manipulation ${activeTab === tab.id
                       ? 'border-primary text-primary'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
+                      }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
             </nav>
           </div>
 
@@ -510,38 +477,15 @@ export default function ProductDetailsClient({
                 )}
               </div>
             )}
-
-            {activeTab === 'reviews' && (
-              <ProductReviews
-                productId={product.id}
-                productName={product.name}
-                reviews={reviews}
-                aggregates={reviewAggregates}
-                canWriteReview={canWriteReview}
-                isAuthenticated={isAuthenticated}
-              />
-            )}
-
-            {activeTab === 'faq' && (
-              <div>
-                <h3 className="text-xl lg:text-2xl font-bold text-primary mb-3 lg:mb-4">
-                  Frequently Asked Questions
-                </h3>
-                <p className="text-gray-600 text-sm">FAQ section will be available soon.</p>
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Related Products */}
-        <RelatedProducts products={mockRelatedProducts} />
       </main>
 
       {/* Enhanced Sticky Mobile Add to Cart */}
       <div
-        className={`fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50 transition-all duration-300 lg:hidden ${
-          showStickyCart ? 'translate-y-0' : 'translate-y-full'
-        }`}
+        className={`fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-2xl z-50 transition-all duration-300 lg:hidden ${showStickyCart ? 'translate-y-0' : 'translate-y-full'
+          }`}
       >
         <div className="px-4 py-3">
           <div className="flex items-center gap-3">
@@ -565,14 +509,6 @@ export default function ProductDetailsClient({
                 <span className="text-lg font-bold text-primary">
                   ₹{product.price}
                 </span>
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-3 h-3 text-yellow-500 fill-current"
-                    />
-                  ))}
-                </div>
               </div>
             </div>
 

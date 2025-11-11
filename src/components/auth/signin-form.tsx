@@ -97,7 +97,7 @@ export function SignInForm({
                 <GoogleSignIn text="Sign in with Google" />
               </div>
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                <span className="bg-card text-muted-foreground relative z-10 px-2">
+                <span className="bg-white text-gray-600 relative z-10 px-2">
                   Or continue with
                 </span>
               </div>
@@ -148,7 +148,7 @@ export function SignInForm({
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-[hsl(var(--primary))] hover:bg-[#1e7a1e] text-white transition-all duration-300"
+                  className="w-full bg-primary hover:bg-primary/90 text-white transition-all duration-300"
                   disabled={isLoading}
                 >
                   {isLoading && (
@@ -163,14 +163,14 @@ export function SignInForm({
                   <button
                     type="button"
                     onClick={onSwitchToSignUp}
-                    className="underline underline-offset-4 text-[hsl(var(--primary))] hover:text-[#1e7a1e] font-medium transition-colors"
+                    className="underline underline-offset-4 text-primary hover:text-primary/80 font-bold transition-colors bg-transparent"
                   >
                     Sign up
                   </button>
                 ) : (
                   <Link
                     href="/sign-up"
-                    className="underline underline-offset-4 text-[hsl(var(--primary))] hover:text-[#1e7a1e] font-medium transition-colors"
+                    className="underline underline-offset-4 text-primary hover:text-primary/80 font-bold transition-colors bg-transparent"
                   >
                     Sign up
                   </Link>

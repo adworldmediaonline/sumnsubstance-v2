@@ -72,7 +72,7 @@ export function EmptyCartState() {
           </div>
 
           {/* Feature Highlights */}
-          <div className="mt-12 pt-8 border-t border-muted">
+          <div className="mt-12 pt-8 border-t border-muted hidden">
             <h3 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">
               Why Shop With Us?
             </h3>
