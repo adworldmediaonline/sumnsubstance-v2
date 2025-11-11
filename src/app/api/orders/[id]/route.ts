@@ -13,11 +13,7 @@ export async function GET(
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        items: {
-          include: {
-            product: true,
-          },
-        },
+        items: true, // Product data in productSnapshot
         user: true,
       },
     });
@@ -58,25 +54,23 @@ export async function GET(
       billingAddress: order.billingAddress
         ? JSON.parse(order.billingAddress as string)
         : null,
-      items: order.items.map(item => ({
-        id: item.id,
-        name: item.name,
-        price: item.price.toNumber(),
-        quantity: item.quantity,
-        total: item.total.toNumber(),
-        productSnapshot: item.productSnapshot,
-        product: {
-          id: item.product.id,
-          name: item.product.name,
-          slug: item.product.slug,
-          mainImage: item.product.mainImageUrl
-            ? {
-                url: item.product.mainImageUrl,
-                altText: item.product.mainImageAlt,
-              }
-            : null,
-        },
-      })),
+      items: order.items.map(item => {
+        const snapshot = item.productSnapshot as any;
+        return {
+          id: item.id,
+          name: item.name,
+          price: item.price.toNumber(),
+          quantity: item.quantity,
+          total: item.total.toNumber(),
+          productSnapshot: item.productSnapshot,
+          product: {
+            id: snapshot.id,
+            name: snapshot.name,
+            slug: snapshot.slug,
+            mainImage: snapshot.mainImage || null,
+          },
+        };
+      }),
       customer: {
         name: order.user?.name || order.guestName,
         email: order.user?.email || order.guestEmail,

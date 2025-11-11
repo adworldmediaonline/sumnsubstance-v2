@@ -52,19 +52,7 @@ export async function getOrders({
       prisma.order.findMany({
         where,
         include: {
-          items: {
-            include: {
-              product: {
-                select: {
-                  id: true,
-                  name: true,
-                  slug: true,
-                  mainImageUrl: true,
-                  mainImageAlt: true,
-                },
-              },
-            },
-          },
+          items: true, // Product data in productSnapshot
           user: {
             select: {
               id: true,
@@ -106,25 +94,23 @@ export async function getOrders({
       billingAddress: order.billingAddress
         ? JSON.parse(order.billingAddress as string)
         : undefined,
-      items: order.items.map(item => ({
-        id: item.id,
-        name: item.name,
-        price: item.price.toNumber(),
-        quantity: item.quantity,
-        total: item.total.toNumber(),
-        productSnapshot: item.productSnapshot as Record<string, unknown>,
-        product: {
-          id: item.product.id,
-          name: item.product.name,
-          slug: item.product.slug,
-          mainImage: item.product.mainImageUrl
-            ? {
-                url: item.product.mainImageUrl,
-                altText: item.product.mainImageAlt || undefined,
-              }
-            : undefined,
-        },
-      })),
+      items: order.items.map(item => {
+        const snapshot = item.productSnapshot as any;
+        return {
+          id: item.id,
+          name: item.name,
+          price: item.price.toNumber(),
+          quantity: item.quantity,
+          total: item.total.toNumber(),
+          productSnapshot: item.productSnapshot as Record<string, unknown>,
+          product: {
+            id: snapshot.id,
+            name: snapshot.name,
+            slug: snapshot.slug,
+            mainImage: snapshot.mainImage || undefined,
+          },
+        };
+      }),
       createdAt: order.createdAt.toISOString(),
       updatedAt: order.updatedAt.toISOString(),
       shippedAt: order.shippedAt?.toISOString(),
@@ -165,19 +151,7 @@ export async function getOrderById(
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        items: {
-          include: {
-            product: {
-              select: {
-                id: true,
-                name: true,
-                slug: true,
-                mainImageUrl: true,
-                mainImageAlt: true,
-              },
-            },
-          },
-        },
+        items: true, // Product data in productSnapshot
         user: {
           select: {
             id: true,
@@ -213,25 +187,23 @@ export async function getOrderById(
       billingAddress: order.billingAddress
         ? JSON.parse(order.billingAddress as string)
         : undefined,
-      items: order.items.map(item => ({
-        id: item.id,
-        name: item.name,
-        price: item.price.toNumber(),
-        quantity: item.quantity,
-        total: item.total.toNumber(),
-        productSnapshot: item.productSnapshot as Record<string, unknown>,
-        product: {
-          id: item.product.id,
-          name: item.product.name,
-          slug: item.product.slug,
-          mainImage: item.product.mainImageUrl
-            ? {
-                url: item.product.mainImageUrl,
-                altText: item.product.mainImageAlt || undefined,
-              }
-            : undefined,
-        },
-      })),
+      items: order.items.map(item => {
+        const snapshot = item.productSnapshot as any;
+        return {
+          id: item.id,
+          name: item.name,
+          price: item.price.toNumber(),
+          quantity: item.quantity,
+          total: item.total.toNumber(),
+          productSnapshot: item.productSnapshot as Record<string, unknown>,
+          product: {
+            id: snapshot.id,
+            name: snapshot.name,
+            slug: snapshot.slug,
+            mainImage: snapshot.mainImage || undefined,
+          },
+        };
+      }),
       createdAt: order.createdAt.toISOString(),
       updatedAt: order.updatedAt.toISOString(),
       shippedAt: order.shippedAt?.toISOString(),

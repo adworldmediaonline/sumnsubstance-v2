@@ -132,11 +132,7 @@ export async function updateOrderStatus(
       where: { id },
       data: updateData,
       include: {
-        items: {
-          include: {
-            product: true,
-          },
-        },
+        items: true, // Product data in productSnapshot
         user: true,
       },
     });
@@ -276,11 +272,7 @@ export async function sendOrderEmail(
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        items: {
-          include: {
-            product: true,
-          },
-        },
+        items: true, // Product data in productSnapshot
         user: true,
       },
     });

@@ -78,11 +78,7 @@ export async function POST(request: NextRequest) {
         razorpaySignature: razorpay_signature,
       },
       include: {
-        items: {
-          include: {
-            product: true,
-          },
-        },
+        items: true, // Product data is in productSnapshot
         user: true,
       },
     });

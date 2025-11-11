@@ -4,6 +4,7 @@ import Razorpay from 'razorpay';
 import prisma from '@/lib/prisma';
 import { createOrderSchema } from '@/lib/validations/order';
 import { generateOrderNumber } from '@/lib/utils/order-utils';
+import { staticProducts } from '@/constants/static-products-data';
 
 // Initialize Razorpay
 const razorpay = new Razorpay({
@@ -33,42 +34,34 @@ export async function POST(request: NextRequest) {
 
     // Validate products and calculate totals
     for (const item of items) {
-      const product = await prisma.product.findUnique({
-        where: { id: item.productId },
-        include: { category: true },
-      });
+      // Find product in static products
+      const staticProduct = staticProducts.find(p => p.id === item.productId);
 
-      if (!product) {
+      if (!staticProduct) {
         return NextResponse.json(
           { error: `Product not found: ${item.productId}` },
           { status: 400 }
         );
       }
 
-      const itemTotal = product.price.toNumber() * item.quantity;
+      // Use static product data
+      const itemTotal = staticProduct.price * item.quantity;
       subtotal += itemTotal;
 
       orderItems.push({
-        productId: product.id,
-        name: product.name,
-        price: product.price,
+        name: staticProduct.name,
+        price: new Decimal(staticProduct.price),
         quantity: item.quantity,
         total: new Decimal(itemTotal),
         productSnapshot: {
-          id: product.id,
-          name: product.name,
-          slug: product.slug,
-          price: product.price.toNumber(),
-          category: product.category,
-          mainImage: product.mainImageUrl
-            ? {
-              url: product.mainImageUrl,
-              publicId: product.mainImagePublicId,
-              altText: product.mainImageAlt,
-            }
-            : null,
-          excerpt: product.excerpt,
-          description: product.description,
+          id: staticProduct.id,
+          name: staticProduct.name,
+          slug: staticProduct.slug,
+          price: staticProduct.price,
+          category: staticProduct.category,
+          mainImage: staticProduct.mainImage,
+          excerpt: staticProduct.excerpt,
+          description: staticProduct.description,
         },
       });
     }
@@ -122,11 +115,7 @@ export async function POST(request: NextRequest) {
         },
       },
       include: {
-        items: {
-          include: {
-            product: true,
-          },
-        },
+        items: true, // Don't include product relation (may not exist for static products)
         user: true,
       },
     });

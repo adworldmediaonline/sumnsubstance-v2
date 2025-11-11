@@ -26,7 +26,6 @@ model User {
   sessions      Session[]
   accounts      Account[]
   orders        Order[]
-  reviews       Review[]
 
   @@unique([email])
   @@map("user")
@@ -77,56 +76,7 @@ model Verification {
   @@map("verification")
 }
 
-model Category {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  slug      String    @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  products  Product[]
-
-  @@map("category")
-}
-
-model Product {
-  id               String   @id @default(cuid())
-  name             String
-  excerpt          String?  // Short description for listings/cards
-  description      String?  // Full description for product details
-  slug             String   @unique
-  price            Decimal  @db.Decimal(10, 2)
-  categoryId       String
-  category         Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  mainImageUrl     String?
-  mainImagePublicId String?
-  mainImageAlt     String?
-  additionalImages Json?    // Store array of image objects
-
-  // New Content Fields
-  tagline          String?  @db.Text // Short tagline
-  whyLoveIt        String?  @db.Text // Rich text content
-  whatsInside      String?  @db.Text // Rich text content
-  howToUse         String?  @db.Text // Rich text content
-  ingredients      String?  @db.Text // Rich text content
-
-  // SEO Fields
-  metaTitle        String?  // Max 60 chars
-  metaDescription  String?  @db.Text // Max 160 chars
-  metaKeywords     String?  @db.Text // Comma-separated keywords
-
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  orderItems       OrderItem[]
-  reviews          Review[]
-
-  // Optimized indexes for search
-  @@index([name])
-  @@index([description])
-  @@index([price])
-  @@index([categoryId])
-  @@index([createdAt])
-  @@map("product")
-}
+// Product and Category models removed - using static data instead
 
 // Order Management System
 model Order {
@@ -182,8 +132,6 @@ model OrderItem {
   id        String   @id @default(cuid())
   orderId   String
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
 
   // Item details (snapshot at time of order)
   name      String   // Product name at time of order
@@ -191,7 +139,7 @@ model OrderItem {
   quantity  Int
   total     Decimal  @db.Decimal(10, 2) // price * quantity
 
-  // Product snapshot for order history
+  // Product snapshot for order history (contains all product data)
   productSnapshot Json // Store product details at time of order
 
   createdAt DateTime @default(now())
@@ -220,47 +168,4 @@ enum PaymentStatus {
   REFUNDED
 }
 
-// Review System
-model Review {
-  id          String   @id @default(cuid())
-  productId   String
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  userId      String?  // Optional for guest reviews (if allowed)
-  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  // Review Content
-  rating      Int      // 1-5 stars
-  title       String?  // Optional review title
-  comment     String   @db.Text
-
-  // Verification
-  isVerifiedPurchase Boolean @default(false)
-  orderId     String?  // Link to order for verification
-
-  // Moderation
-  status      ReviewStatus @default(PENDING)
-  moderatedBy String?  // Admin who approved/rejected
-  moderatedAt DateTime?
-
-  // Helpful votes
-  helpfulCount   Int @default(0)
-  unhelpfulCount Int @default(0)
-
-  // Media
-  images      Json?    // Array of review images
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@map("review")
-  @@index([productId])
-  @@index([userId])
-  @@index([status])
-}
-
-enum ReviewStatus {
-  PENDING
-  APPROVED
-  REJECTED
-  FLAGGED
-}
+// Review System removed - not using reviews for static products
