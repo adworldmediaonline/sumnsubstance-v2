@@ -35,6 +35,7 @@ import { GoogleSignIn } from './google-signin';
 interface SignUpFormProps extends React.ComponentProps<'div'> {
   onSuccess?: () => void;
   onSwitchToSignIn?: () => void;
+  onVerificationNeeded?: (email: string) => void;
   inDialog?: boolean;
 }
 
@@ -42,6 +43,7 @@ export function SignUpForm({
   className,
   onSuccess,
   onSwitchToSignIn,
+  onVerificationNeeded,
   inDialog = false,
   ...props
 }: SignUpFormProps) {
@@ -71,14 +73,16 @@ export function SignUpForm({
         },
         onSuccess: () => {
           setIsLoading(false);
-          toast.success('Sign up successful');
-          if (onSuccess) {
-            onSuccess();
+          toast.success('Verification code sent to your email');
+          // If in dialog and verification callback exists, show verification view
+          if (inDialog && onVerificationNeeded) {
+            onVerificationNeeded(values.email);
+          } else {
+            // Otherwise redirect to verify email page
+            router.push(
+              `/verify-email?email=${encodeURIComponent(values.email)}`
+            );
           }
-          // Always redirect to verify email page for email verification
-          router.push(
-            `/verify-email?email=${encodeURIComponent(values.email)}`
-          );
         },
         onError: ctx => {
           console.log(ctx);

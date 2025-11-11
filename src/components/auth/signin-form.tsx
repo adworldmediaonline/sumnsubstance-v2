@@ -29,6 +29,7 @@ import { GoogleSignIn } from './google-signin';
 interface SignInFormProps extends React.ComponentProps<'div'> {
   onSuccess?: () => void;
   onSwitchToSignUp?: () => void;
+  onVerificationNeeded?: (email: string) => void;
   inDialog?: boolean;
 }
 
@@ -36,6 +37,7 @@ export function SignInForm({
   className,
   onSuccess,
   onSwitchToSignUp,
+  onVerificationNeeded,
   inDialog = false,
   ...props
 }: SignInFormProps) {
