@@ -7,7 +7,7 @@ import {
   useCartItems,
   useCartTotalPrice,
 } from '@/store/cart-store';
-import { CheckCircle, ShoppingBag, X } from 'lucide-react';
+import { ArrowRight, CheckCircle, ShoppingBag, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -55,24 +55,22 @@ export function FloatingCart() {
     <>
       {/* Floating Cart Card - Bottom Center */}
       <div
-        className={`fixed bottom-4 left-1/2 -translate-x-1/2 w-[90vw] max-w-md z-50 transition-all duration-500 ease-out ${
-          isVisible
-            ? 'translate-y-0 opacity-100 scale-100'
-            : 'translate-y-[120%] opacity-0 scale-95 pointer-events-none'
-        }`}
+        className={`fixed bottom-4 left-1/2 -translate-x-1/2 w-[90vw] max-w-md z-50 transition-all duration-500 ease-out ${isVisible
+          ? 'translate-y-0 opacity-100 scale-100'
+          : 'translate-y-[120%] opacity-0 scale-95 pointer-events-none'
+          }`}
         role="dialog"
         aria-label="Shopping cart notification"
         aria-live="polite"
       >
         <div
-          className={`bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transition-transform duration-300 ${
-            isAnimating ? 'scale-[1.02]' : 'scale-100'
-          }`}
+          className={`bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden transition-transform duration-300 ${isAnimating ? 'scale-[1.02]' : 'scale-100'
+            }`}
         >
           {/* Compact Layout Container */}
           <div className="flex items-center gap-3 px-3 py-3">
             {/* Cart Icon */}
-            <div className="w-8 h-8 bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary))] rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
               <ShoppingBag className="w-4 h-4 text-white" />
             </div>
 
@@ -90,11 +88,10 @@ export function FloatingCart() {
                   >
                     {/* Circular Product Image */}
                     <div
-                      className={`relative w-12 h-12 rounded-full overflow-hidden transition-all duration-300 border-2 border-white shadow-sm ${
-                        recentlyAdded === item.product.id
-                          ? 'ring-2 ring-[hsl(var(--primary))] scale-110'
-                          : 'hover:scale-105'
-                      }`}
+                      className={`relative w-12 h-12 rounded-full overflow-hidden transition-all duration-300 border-2 border-white shadow-sm ${recentlyAdded === item.product.id
+                        ? 'ring-2 ring-primary scale-110'
+                        : 'hover:scale-105'
+                        }`}
                     >
                       {item.product.mainImage ? (
                         <Image
@@ -138,10 +135,13 @@ export function FloatingCart() {
                 <Button
                   asChild
                   size="sm"
-                  className="bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] text-white h-8 px-3 text-xs"
+                  className="bg-primary hover:bg-primary/90 text-white h-8 px-3 text-xs"
                   onClick={dismiss}
                 >
-                  <Link href="/cart">Cart</Link>
+                  <Link href="/cart" className="flex items-center gap-1">
+                    View Cart
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
                 </Button>
                 <button
                   onClick={dismiss}
