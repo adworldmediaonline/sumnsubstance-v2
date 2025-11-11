@@ -24,6 +24,7 @@ export const staticProducts = [
 <p><strong>Caution:</strong> This product may contain ingredients that could cause skin irritation in some individuals. Test on a small area before use.</p>
 <p>For external use only. Store in a dry cool place away from sunlight.</p>`,
     price: 855,
+    featured: true, // Featured product flag
     mainImage: {
       url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop',
       altText: 'Barely There SPF Lotion',

@@ -8,8 +8,13 @@ import {
   Shield,
 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { staticProducts } from '@/constants/static-products-data';
 
 export default function HeroContent() {
+  // Get the featured product
+  const featuredProduct = staticProducts.find(p => p.featured);
+
   return (
     <section className="relative min-h-screen bg-primary overflow-hidden">
 
@@ -20,28 +25,56 @@ export default function HeroContent() {
           <div className="space-y-8">
             {/* Main Heading */}
             <div className="space-y-4">
-              <h1 className="text-5xl lg:text-7xl font-bold text-white leading-tight">
-                Natural
-                <br />
-                <span className="text-white font-bold">
-                  Beauty
-                </span>
-              </h1>
+              {featuredProduct ? (
+                <>
+                  <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
+                    {featuredProduct.name}
+                  </h1>
+                  <p className="text-xl lg:text-2xl text-white/90 font-medium">
+                    {featuredProduct.tagline}
+                  </p>
+                  <p className="text-lg lg:text-xl text-white/80 leading-relaxed max-w-lg">
+                    {featuredProduct.excerpt}
+                  </p>
 
-              <p className="text-lg lg:text-xl text-white/90 leading-relaxed max-w-lg">
-                Transform your skin with our premium collection of natural,
-                organic skincare products designed for radiant, healthy beauty.
-              </p>
+                  {/* Price */}
+                  <div className="flex items-center gap-4">
+                    <span className="text-3xl lg:text-4xl font-bold text-white">
+                      ₹{featuredProduct.price}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h1 className="text-5xl lg:text-7xl font-bold text-white leading-tight">
+                    Natural
+                    <br />
+                    <span className="text-white font-bold">
+                      Beauty
+                    </span>
+                  </h1>
+
+                  <p className="text-lg lg:text-xl text-white/90 leading-relaxed max-w-lg">
+                    Transform your skin with our premium collection of natural,
+                    organic skincare products designed for radiant, healthy beauty.
+                  </p>
+                </>
+              )}
             </div>
 
             {/* CTA Button */}
-            <Button
-              size="lg"
-              className="bg-white hover:bg-white/90 text-primary px-8 py-6 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-            >
-              DISCOVER MORE
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
+            {featuredProduct && (
+              <Button
+                asChild
+                size="lg"
+                className="bg-white hover:bg-white/90 text-primary px-8 py-6 text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+              >
+                <Link href={`/products/${featuredProduct.slug}`}>
+                  Shop Now
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+            )}
           </div>
 
           {/* Right Product Display */}
@@ -53,8 +86,8 @@ export default function HeroContent() {
                 {/* Product Image */}
                 <div className="w-[450px] h-[450px] rounded-full overflow-hidden shadow-2xl relative border-4 border-white/30">
                   <Image
-                    src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"
-                    alt="Natural Skincare Product"
+                    src={featuredProduct?.mainImage?.url || "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"}
+                    alt={featuredProduct?.mainImage?.altText || "Natural Skincare Product"}
                     fill
                     className="object-cover scale-110 hover:scale-125 transition-transform duration-700"
                     sizes="450px"
