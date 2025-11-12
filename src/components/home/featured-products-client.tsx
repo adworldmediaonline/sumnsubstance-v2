@@ -3,24 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Heart, Star, ShoppingBag, Minus, Plus, Share2 } from 'lucide-react';
-import type { SerializedProductWithCategory } from '@/lib/serializers';
-import type { ReviewAggregates } from '@/types/review';
+import type { StaticProduct } from '@/constants/static-products-data';
 import { useAddItem } from '@/store/cart-store';
 
-interface FeaturedProduct extends SerializedProductWithCategory {
-  // Additional frontend-only fields
-  isWishlisted?: boolean;
-  inStock?: boolean;
-  featured?: boolean;
-  // Fields to be added later
-  originalPrice?: number;
-  benefits?: string[];
-  // Review statistics
-  reviewStats?: ReviewAggregates;
-}
-
 interface FeaturedProductsClientProps {
-  products: FeaturedProduct[];
+  products: StaticProduct[];
 }
 
 export function FeaturedProductsClient({
@@ -57,7 +44,7 @@ export function FeaturedProductsClient({
     console.log('Toggle wishlist:', productId);
   };
 
-  const handleShare = (product: FeaturedProduct) => {
+  const handleShare = (product: StaticProduct) => {
     if (navigator.share) {
       navigator.share({
         title: product.name,
@@ -86,8 +73,6 @@ export function FeaturedProductsClient({
     <div className="space-y-12">
       {products.map((product, index) => {
         const isReversed = index % 2 === 1;
-        const rating = product.reviewStats?.averageRating || 0;
-        const reviewCount = product.reviewStats?.totalReviews || 0;
         const quantity = getQuantity(product.id);
 
         return (

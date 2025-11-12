@@ -69,20 +69,13 @@ export interface RazorpayPaymentData {
 // Prisma types with relations
 export type OrderWithItems = Prisma.OrderGetPayload<{
   include: {
-    items: {
-      include: {
-        product: true;
-      };
-    };
+    items: true;
     user: true;
   };
 }>;
 
-export type OrderItemWithProduct = Prisma.OrderItemGetPayload<{
-  include: {
-    product: true;
-  };
-}>;
+// OrderItemWithProduct type no longer needed since product relation removed
+// export type OrderItemWithProduct = Prisma.OrderItemGetPayload<Record<string, never>>;
 
 // Serialized types for client-side use
 export interface SerializedOrder {

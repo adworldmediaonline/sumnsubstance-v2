@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import type { SerializedProductWithCategory } from '@/server/queries/product';
+import type { StaticProduct } from '@/constants/static-products-data';
 import { useAddItem } from '@/store/cart-store';
 import { useRouter } from 'next/navigation';
 
@@ -35,7 +35,7 @@ import 'swiper/css/navigation';
 export default function ProductDetailsClient({
   product,
 }: {
-  product: SerializedProductWithCategory;
+  product: StaticProduct;
 }) {
   // Transform images into array format for gallery display (memoized to prevent re-renders)
   const allImages = useMemo(
@@ -300,20 +300,6 @@ export default function ProductDetailsClient({
               </div>
             </div>
 
-            {/* Key Benefits / Why You'll Love It - Mobile optimized */}
-            {product.whyLoveIt && (
-              <div className="bg-[#ffffff]/10 rounded-xl p-4">
-                <h3 className="font-bold text-primary mb-2 flex items-center text-sm lg:text-base">
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  Why You'll Love It
-                </h3>
-                <div
-                  className="text-gray-700 text-sm prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: product.whyLoveIt }}
-                />
-              </div>
-            )}
-
             {/* Quantity & Add to Cart - Mobile optimized */}
             <div className="space-y-3 lg:space-y-4" id="add-to-cart-section">
               <div className="space-y-2">
@@ -388,7 +374,7 @@ export default function ProductDetailsClient({
                   )}
 
                   {/* How to Use */}
-                  {product.howToUse && (
+                  {product.usage && (
                     <AccordionItem value="usage" className="border border-gray-200 rounded-lg px-4">
                       <AccordionTrigger className="text-primary hover:text-primary/80 font-semibold text-sm lg:text-base hover:no-underline">
                         How to Use
@@ -396,7 +382,7 @@ export default function ProductDetailsClient({
                       <AccordionContent>
                         <div
                           className="text-gray-700 leading-relaxed text-sm lg:text-base prose prose-sm max-w-none pt-2"
-                          dangerouslySetInnerHTML={{ __html: product.howToUse }}
+                          dangerouslySetInnerHTML={{ __html: product.usage }}
                         />
                       </AccordionContent>
                     </AccordionItem>

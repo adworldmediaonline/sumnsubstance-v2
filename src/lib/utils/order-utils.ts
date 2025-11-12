@@ -56,34 +56,22 @@ export function calculateOrderTotals(
 }
 
 /**
- * Validate order items against current product data
+ * Validate order items against static products
+ *
+ * Note: This function is deprecated - validation now happens in the API
+ * against staticProducts from @/constants/static-products-data
  */
 export async function validateOrderItems(
   items: Array<{ productId: string; quantity: number }>
 ) {
-  const validatedItems = [];
+  // This function is no longer used - validation happens in the API
+  // against staticProducts from @/constants/static-products-data
+  console.warn('validateOrderItems is deprecated - use static product validation');
 
-  for (const item of items) {
-    const product = await prisma.product.findUnique({
-      where: { id: item.productId },
-      include: { category: true },
-    });
-
-    if (!product) {
-      throw new Error(`Product not found: ${item.productId}`);
-    }
-
-    if (item.quantity < 1 || item.quantity > 100) {
-      throw new Error(`Invalid quantity for ${product.name}: ${item.quantity}`);
-    }
-
-    validatedItems.push({
-      product,
-      quantity: item.quantity,
-      price: product.price.toNumber(),
-      total: product.price.toNumber() * item.quantity,
-    });
-  }
+  const validatedItems = items.map(item => ({
+    productId: item.productId,
+    quantity: item.quantity,
+  }));
 
   return validatedItems;
 }

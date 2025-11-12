@@ -7,7 +7,7 @@ export interface CartProduct {
   excerpt?: string;
   mainImage?: {
     url: string;
-    publicId: string;
+    publicId?: string;
     altText?: string;
   };
   category: {

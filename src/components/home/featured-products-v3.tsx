@@ -2,10 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { Shield, Sparkles } from 'lucide-react';
 import { FeaturedProductsClient } from './featured-products-client';
-import type { SerializedProductWithCategory } from '@/lib/serializers';
+import type { StaticProduct } from '@/constants/static-products-data';
 
 interface FeaturedProductsProps {
-  products: SerializedProductWithCategory[];
+  products: StaticProduct[];
 }
 
 export default function FeaturedProductsV3({
