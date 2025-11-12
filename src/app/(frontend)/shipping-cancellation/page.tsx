@@ -88,7 +88,7 @@ export default function ShippingCancellationPage() {
                   1
                 </div>
                 <p className="text-gray-700 text-base lg:text-lg">
-                  Cancellation requests must be made within 24 hours of placing the order.
+                  Cancellation requests must be made within 5 hours of placing the order.
                 </p>
               </div>
 
@@ -123,7 +123,7 @@ export default function ShippingCancellationPage() {
                   4
                 </div>
                 <p className="text-gray-700 text-base lg:text-lg">
-                  Refunds for cancelled orders will be processed promptly as per payment method.
+                  Refunds for cancelled orders may take up to 7 days to process as per payment method.
                 </p>
               </div>
             </div>

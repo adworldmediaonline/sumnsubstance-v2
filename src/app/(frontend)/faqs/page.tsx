@@ -19,7 +19,7 @@ export default function FAQsPage() {
     },
     {
       question: '3. Can I cancel or change my order?',
-      answer: 'You can cancel or modify your order within 24 hours of placing it by contacting our customer care at care@sumnsubstance.com or +91 98738 90047.',
+      answer: 'You can cancel or modify your order within 5 hours of placing it by contacting our customer care at care@sumnsubstance.com or +91 98738 90047.',
     },
     {
       question: '4. How long does shipping take?',
@@ -31,7 +31,7 @@ export default function FAQsPage() {
     },
     {
       question: '6. What is your return policy?',
-      answer: 'Products can be returned within 7 days of delivery in original, unused condition. Please see our Returns & Refunds page for details.',
+      answer: 'Products can be returned within 2 days of delivery only in the case of any damage or defect, in original, unused condition. Please see our Returns & Refunds page for details.',
     },
     {
       question: '7. Are Sum N Substance products safe for sensitive skin?',

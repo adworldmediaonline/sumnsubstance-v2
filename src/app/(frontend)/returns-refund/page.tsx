@@ -41,7 +41,7 @@ export default function ReturnsRefundPage() {
           <div className="space-y-4">
             <div className="bg-white border-2 border-primary/20 rounded-lg p-5 hover:border-primary/40 transition-colors">
               <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                Products can be returned within 7 days of delivery.
+                Products can be returned within 2 days of delivery only in the case of any damage or defect.
               </p>
             </div>
 

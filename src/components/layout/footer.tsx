@@ -13,7 +13,6 @@ import {
   Truck,
   ChevronRight,
   Globe,
-  Gift,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -49,18 +48,13 @@ export default function Footer({ className = '' }: FooterProps) {
   const trustFeatures = [
     {
       icon: Globe,
-      title: 'Worldwide Shipping',
+      title: 'Country wide Shipping',
       description: 'International Shipping available Worldwide',
     },
     {
       icon: Truck,
       title: 'Free Shipping',
       description: 'Free Shipping on all domestic prepaid orders above Rs. 899',
-    },
-    {
-      icon: Gift,
-      title: 'Earn Rewards',
-      description: 'Unlock Rewards with each purchase you make',
     },
     {
       icon: Shield,
@@ -112,7 +106,7 @@ export default function Footer({ className = '' }: FooterProps) {
       {/* Trust Features Section */}
       <div className="bg-gray-50 py-8 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {trustFeatures.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
