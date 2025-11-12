@@ -12,81 +12,10 @@ export default function HeroBanner() {
         <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[700px] py-20">
           {/* Enhanced Left Content */}
           <div className="space-y-10">
-            {/* Premium Badge */}
-            <div className="inline-flex items-center gap-3 border-2 border-white/30 px-6 py-3 rounded-full text-white font-semibold shadow-lg">
-              <Shield className="w-5 h-5" />
-              <span>Dermatologist Approved • Science-Backed</span>
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
 
-            {/* Enhanced Hero Title */}
-            <div className="space-y-6">
-              <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold leading-tight text-white">
-                <span className="block">
-                  Transform
-                </span>
-                <span className="block">
-                  Your Skin
-                </span>
-                <span className="block text-2xl lg:text-4xl xl:text-5xl font-medium opacity-90">
-                  Naturally & Scientifically
-                </span>
-              </h1>
 
-              <p className="text-xl lg:text-2xl text-white/90 font-medium leading-relaxed max-w-2xl">
-                Experience the perfect blend of
-                <span className="text-white font-bold">
-                  {' '}
-                  nature's wisdom
-                </span>{' '}
-                and
-                <span className="text-white font-bold">
-                  {' '}
-                  scientific innovation
-                </span>
-                for radiant, healthy skin that glows from within.
-              </p>
-            </div>
 
-            {/* Enhanced Trust Indicators */}
-            <div className="space-y-6">
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-6 h-6 text-white fill-current"
-                    />
-                  ))}
-                </div>
-                <div className="text-white">
-                  <span className="text-2xl font-bold">4.9</span>
-                  <span className="text-lg font-medium ml-2 opacity-90">
-                    from 10,000+ reviews
-                  </span>
-                </div>
-              </div>
 
-              {/* Benefits Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  'Clinically Tested',
-                  'Natural Ingredients',
-                  'Cruelty-Free',
-                  'Dermatologist Approved',
-                ].map(benefit => (
-                  <div
-                    key={benefit}
-                    className="flex items-center gap-3 border-2 border-white/30 px-4 py-3 rounded-full"
-                  >
-                    <CheckCircle className="w-5 h-5 text-white" />
-                    <span className="text-white font-medium">
-                      {benefit}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
 
             {/* Enhanced Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-6">
