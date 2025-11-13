@@ -153,7 +153,7 @@ export const staticProducts = [
   },
   {
     id: '5',
-    name: 'Sum N Substance Hand Cream',
+    name: 'Hand Cream',
     slug: 'hand-cream',
     tagline: '50ml / 1.69oz',
     excerpt: '✨ Hydration That Feels Good. Skin That Looks Even Better.',
