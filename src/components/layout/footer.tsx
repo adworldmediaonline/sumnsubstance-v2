@@ -49,12 +49,12 @@ export default function Footer({ className = '' }: FooterProps) {
     {
       icon: Globe,
       title: 'Country wide Shipping',
-      description: 'International Shipping available Worldwide',
+      description: 'We provide Pan India shipping',
     },
     {
       icon: Truck,
       title: 'Free Shipping',
-      description: 'Free Shipping on all domestic prepaid orders above Rs. 899',
+      description: 'Free Shipping on all domestic prepaid orders above Rs. 1000',
     },
     {
       icon: Shield,
