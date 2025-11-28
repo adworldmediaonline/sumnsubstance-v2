@@ -235,7 +235,7 @@ export async function getOrderById(
   }
 }
 
-async function calculateOrderAnalytics() {
+export async function calculateOrderAnalytics() {
   try {
     const [totalOrders, totalRevenue, ordersByStatus, recentOrders] =
       await Promise.all([

@@ -36,26 +36,13 @@ const data = {
       url: '/dashboard/admin',
       icon: IconDashboard,
     },
-    {
-      title: 'Categories',
-      url: '/dashboard/admin/categories',
-      icon: IconCategory,
-    },
-    {
-      title: 'Products',
-      url: '/dashboard/admin/products',
-      icon: IconPackage,
-    },
+
     {
       title: 'Orders',
       url: '/dashboard/admin/orders',
       icon: IconShoppingCart,
     },
-    {
-      title: 'Reviews',
-      url: '/dashboard/admin/reviews',
-      icon: IconStar,
-    },
+
 
   ],
 

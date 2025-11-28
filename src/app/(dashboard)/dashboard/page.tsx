@@ -9,7 +9,7 @@ async function DashboardRedirect() {
   });
 
   if (!session?.session) {
-    redirect('/sign-in');
+    redirect('/admin');
   }
 
   if (session?.user.role === 'admin') {

@@ -13,11 +13,11 @@ async function AuthCheck({ children }: { children: React.ReactNode }) {
   });
 
   if (!session) {
-    redirect('/sign-in');
+    redirect('/admin');
   }
 
   if (session.user.role !== 'admin') {
-    redirect('/sign-in');
+    redirect('/admin');
   }
 
   return <>{children}</>;

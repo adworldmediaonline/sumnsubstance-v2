@@ -49,13 +49,13 @@ export function AuthDialog({ trigger, defaultTab = 'signin' }: AuthDialogProps) 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {/* uncommet later */}
-      {/* {trigger} */}
+      {trigger}
       {/* uncomment later */}
 
       {/* remvoe later */}
-      <div className="w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-300 bg-primary text-white">
+      {/* <div className="w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-300 bg-primary text-white">
         <User className="w-5 h-5" />
-      </div>
+      </div> */}
       {/* remove later */}
       <DialogContent className="sm:max-w-[480px] w-[calc(100vw-2rem)] max-h-[90vh] overflow-x-hidden overflow-y-auto p-0 gap-0 bg-white">
         {currentView === 'verify' ? (

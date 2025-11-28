@@ -29,9 +29,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logo from '../../../public/brand/S&S Logo-01.png';
 
-import { AuthDialog } from '@/components/auth/auth-dialog';
 import { CartDropdown } from '@/components/cart/cart-dropdown';
-import { DialogTrigger } from '@/components/ui/dialog';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { authClient } from '@/lib/auth-client';
@@ -224,31 +222,7 @@ export default function SiteHeaderPublic() {
               </DropdownMenuContent>
             </DropdownMenu>
           )}</div>
-        ) : (
-          isMounted && (
-            <AuthDialog
-              trigger={
-                <DialogTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`relative p-2 rounded-full transition-all duration-300 ${isHomePage
-                      ? (isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10')
-                      : 'hover:bg-gray-100'
-                      }`}
-                  >
-                    <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-300 ${isHomePage
-                      ? (isScrolled ? 'bg-primary text-white' : 'bg-white text-primary')
-                      : 'bg-primary text-white'
-                      }`}>
-                      <User className="w-5 h-5" />
-                    </div>
-                  </Button>
-                </DialogTrigger>
-              }
-            />
-          )
-        )}
+        ) : null}
 
         {/* Mobile Menu */}
         <div className="md:hidden">
@@ -368,21 +342,7 @@ export default function SiteHeaderPublic() {
                         <LogOut className="mr-2 h-5 w-5" />
                         <span className="font-medium">Log out</span>
                       </Button>
-                    ) : (
-                      <AuthDialog
-                        trigger={
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              className="w-full justify-start text-white hover:bg-white/10"
-                            >
-                              <User className="mr-2 h-5 w-5" />
-                              <span className="font-medium">Sign In</span>
-                            </Button>
-                          </DialogTrigger>
-                        }
-                      />
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </SheetContent>
