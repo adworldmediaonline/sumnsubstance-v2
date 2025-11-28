@@ -106,7 +106,7 @@ export function FeaturedProductsClient({
                       <div className="relative w-full h-full">
                         {/* Primary Circle - Main Product Display */}
                         <div
-                          className="absolute inset-0 rounded-full bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm shadow-2xl border border-white/50 overflow-hidden group-hover:scale-105 transition-all duration-500"
+                          className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm shadow-2xl border border-white/50 overflow-hidden group-hover:scale-105 transition-all duration-500"
                           style={{
                             backgroundImage: `url(${product.mainImage?.url ||
                               '/placeholder-product.jpg'
@@ -120,14 +120,6 @@ export function FeaturedProductsClient({
                           {/* Overlay gradient for better text visibility */}
                           <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-[hsl(var(--primary))]/10"></div>
                         </div>
-
-                        {/* Corner Accent Diamonds */}
-                        <div className="absolute top-12 left-12 w-6 h-6 bg-white/70 rotate-45 shadow-lg group-hover:scale-110 transition-all duration-300"></div>
-                        <div className="absolute bottom-12 right-12 w-4 h-4 bg-primary/70 rotate-45 shadow-lg group-hover:scale-110 transition-all duration-300"></div>
-
-                        {/* Symmetrical Ring Elements */}
-                        <div className="absolute inset-8 rounded-full border-2 border-white/30 group-hover:border-white/50 transition-all duration-500"></div>
-                        <div className="absolute inset-12 rounded-full border border-[#ffffff]/20 group-hover:border-[#ffffff]/40 transition-all duration-500"></div>
                       </div>
                     </Link>
 
