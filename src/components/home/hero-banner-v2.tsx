@@ -20,13 +20,11 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   ArrowRight,
-  Heart,
   Leaf,
   LogOut,
   Menu,
   Package,
   Settings,
-  Shield,
   User,
   UserIcon
 } from 'lucide-react';
@@ -505,64 +503,15 @@ export default function HeroBannerV2() {
           <div className="relative flex justify-center items-center">
             {/* Main Product Container */}
             <div className="relative">
-              {/* Large background circle - Made bigger */}
-              <div className="w-[500px] h-[500px] bg-white/10 backdrop-blur-sm rounded-full border border-white/20 flex items-center justify-center relative overflow-hidden">
-                {/* Product Image from Unsplash - Made bigger and better styled */}
-                <div className="w-[450px] h-[450px] rounded-full overflow-hidden shadow-2xl relative border-4 border-white/30">
-                  <Image
-                    src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"
-                    alt="Natural Skincare Product"
-                    fill
-                    className="object-cover scale-110 hover:scale-125 transition-transform duration-700"
-                    sizes="450px"
-                  />
-                  {/* Enhanced overlay for better product presentation */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[hsl(var(--primary))]/20"></div>
-
-                  {/* Product highlight ring */}
-                  <div className="absolute inset-8 rounded-full border-2 border-white/40 animate-pulse"></div>
-                  <div className="absolute inset-16 rounded-full border border-[#ffffff]/30"></div>
-                </div>
-
-                {/* Enhanced floating natural elements - Positioned for bigger circle */}
-                <div className="absolute -top-12 -left-12 w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-300">
-                  <Leaf className="w-12 h-12 text-[#ffffff]" />
-                </div>
-
-                <div className="absolute -bottom-12 -right-12 w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-300">
-                  <Heart className="w-10 h-10 text-[#ffffff]" />
-                </div>
-
-                {/* Enhanced orbiting elements */}
-                <div className="absolute top-16 right-16 w-8 h-8 bg-[#ffffff] rounded-full animate-pulse shadow-lg"></div>
-                <div className="absolute bottom-16 left-16 w-6 h-6 bg-white/80 rounded-full shadow-lg"></div>
-                <div className="absolute top-1/2 left-8 w-4 h-4 bg-[#ffffff]/60 rounded-full"></div>
-                <div className="absolute top-1/2 right-8 w-4 h-4 bg-white/60 rounded-full"></div>
-              </div>
-
-              {/* Enhanced floating badge - Repositioned for bigger layout */}
-              <div className="absolute top-20 -right-16 bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl transform hover:scale-105 transition-transform duration-300">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-[hsl(var(--primary))] rounded-full flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-bold text-[hsl(var(--primary))]">
-                      100% Natural
-                    </div>
-                    <div className="text-xs text-gray-600">
-                      Certified Organic
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Additional product quality indicators */}
-              <div className="absolute bottom-20 -left-16 bg-gradient-to-r from-[#ffffff]/90 to-[#ffffff]/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl transform hover:scale-105 transition-transform duration-300">
-                <div className="text-center">
-                  <div className="text-white font-bold text-lg">Premium</div>
-                  <div className="text-white/90 text-xs">Quality</div>
-                </div>
+              {/* Product Image */}
+              <div className="w-[280px] sm:w-[320px] md:w-[360px] lg:w-[400px] aspect-[2/3] rounded-lg overflow-hidden relative">
+                <Image
+                  src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"
+                  alt="Natural Skincare Product"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, (max-width: 1024px) 360px, 400px"
+                />
               </div>
             </div>
           </div>

@@ -100,7 +100,7 @@ export function FeaturedProductsClient({
                   </div>
 
                   {/* Symmetrical Container with Product Image Background */}
-                  <div className="relative z-10 w-full max-w-[380px] h-[380px]">
+                  <div className="relative z-10 w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] aspect-[2/3]">
                     <Link href={`/products/${product.slug}`}>
                       {/* Symmetrical Geometric Container */}
                       <div className="relative w-full h-full">
@@ -111,8 +111,9 @@ export function FeaturedProductsClient({
                             backgroundImage: `url(${product.mainImage?.url ||
                               '/placeholder-product.jpg'
                               })`,
-                            backgroundSize: 'cover',
+                            backgroundSize: 'contain',
                             backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
                             backgroundBlendMode: 'overlay',
                           }}
                         >

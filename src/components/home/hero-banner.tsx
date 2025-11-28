@@ -41,66 +41,14 @@ export default function HeroBanner() {
           <div className="relative flex justify-center items-center">
             <div className="relative">
               {/* Main Product Showcase */}
-              <div className="relative border-2 border-white/20 rounded-3xl p-10 shadow-2xl">
-                <div className="w-80 h-80 rounded-2xl overflow-hidden shadow-inner border-2 border-white/20 relative">
-                  <Image
-                    src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&h=500&fit=crop&crop=center"
-                    alt="Premium Skincare Product"
-                    fill
-                    className="object-cover"
-                    sizes="320px"
-                  />
-                </div>
-
-                {/* Premium Badge */}
-                <div className="absolute -top-4 -right-4 bg-white text-primary px-6 py-3 rounded-full text-lg font-bold shadow-xl border-2 border-white">
-                  ✨ Best Seller
-                </div>
-
-                {/* Price Tag */}
-                <div className="absolute -bottom-4 -left-4 bg-white text-primary px-6 py-3 rounded-full shadow-xl">
-                  <span className="text-lg font-bold">₹1,299</span>
-                  <span className="text-sm ml-2 line-through opacity-70">
-                    ₹1,599
-                  </span>
-                </div>
-              </div>
-
-              {/* Floating Product Cards */}
-              <div className="absolute -bottom-8 -right-8 border-2 border-white/30 rounded-2xl p-6 shadow-xl">
-                <div className="w-24 h-24 rounded-xl overflow-hidden border-2 border-white/20 relative">
-                  <Image
-                    src="https://images.unsplash.com/photo-1570554886111-e80fcca6a029?w=300&h=300&fit=crop&crop=center"
-                    alt="Vitamin C Serum"
-                    fill
-                    className="object-cover"
-                    sizes="96px"
-                  />
-                </div>
-                <div className="mt-3 text-center">
-                  <p className="text-sm font-semibold text-white">
-                    Vitamin C
-                  </p>
-                  <p className="text-xs text-white/70">Serum</p>
-                </div>
-              </div>
-
-              <div className="absolute -top-8 -left-8 border-2 border-white/30 rounded-2xl p-6 shadow-xl">
-                <div className="w-24 h-24 rounded-xl overflow-hidden border-2 border-white/20 relative">
-                  <Image
-                    src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=300&h=300&fit=crop&crop=center"
-                    alt="Moisturizer"
-                    fill
-                    className="object-cover"
-                    sizes="96px"
-                  />
-                </div>
-                <div className="mt-3 text-center">
-                  <p className="text-sm font-semibold text-white">
-                    Hydrating
-                  </p>
-                  <p className="text-xs text-white/70">Moisturizer</p>
-                </div>
+              <div className="w-[200px] sm:w-[240px] md:w-[280px] aspect-[2/3] rounded-lg overflow-hidden relative">
+                <Image
+                  src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&h=500&fit=crop&crop=center"
+                  alt="Premium Skincare Product"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 640px) 200px, (max-width: 768px) 240px, 280px"
+                />
               </div>
             </div>
           </div>

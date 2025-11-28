@@ -1,12 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-  ArrowRight,
-  Heart,
-  Leaf,
-  Shield,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { staticProducts } from '@/constants/static-products-data';
@@ -81,39 +76,16 @@ export default function HeroContent() {
           <div className="relative flex justify-center items-center mt-8 lg:mt-0">
             {/* Main Product Container */}
             <div className="relative">
-              {/* Large background circle */}
-              <div className="w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[400px] md:h-[400px] xl:w-[500px] xl:h-[500px] rounded-full border border-white/20 flex items-center justify-center relative overflow-hidden">
-                {/* Product Image */}
-                <div className="w-[250px] h-[250px] sm:w-[320px] sm:h-[320px] md:w-[350px] md:h-[350px] xl:w-[450px] xl:h-[450px] rounded-full overflow-hidden shadow-2xl relative border-2 sm:border-4 border-white/30">
-                  <Image
-                    src={featuredProduct?.mainImage?.url || "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"}
-                    alt={featuredProduct?.mainImage?.altText || "Natural Skincare Product"}
-                    fill
-                    className="object-cover scale-110 hover:scale-125 transition-transform duration-700"
-                    sizes="(max-width: 640px) 250px, (max-width: 768px) 320px, (max-width: 1280px) 350px, 450px"
-                  />
-
-                  {/* Product highlight rings */}
-                  <div className="absolute inset-8 rounded-full border-2 border-white/40 animate-pulse"></div>
-                  <div className="absolute inset-16 rounded-full border border-white/30"></div>
-                </div>
-
-                {/* Floating natural elements */}
-                <div className="absolute -top-8 -left-8 sm:-top-12 sm:-left-12 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full border-2 border-white/30 flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-300">
-                  <Leaf className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" />
-                </div>
-
-                <div className="absolute -bottom-8 -right-8 sm:-bottom-12 sm:-right-12 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border-2 border-white/30 flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-300">
-                  <Heart className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white" />
-                </div>
-
-                {/* Orbiting elements - hidden on very small screens */}
-                <div className="hidden sm:block absolute top-16 right-16 w-6 h-6 md:w-8 md:h-8 border-2 border-white rounded-full animate-pulse shadow-lg"></div>
-                <div className="hidden sm:block absolute bottom-16 left-16 w-4 h-4 md:w-6 md:h-6 border-2 border-white/80 rounded-full shadow-lg"></div>
-                <div className="hidden md:block absolute top-1/2 left-8 w-4 h-4 border-2 border-white/60 rounded-full"></div>
-                <div className="hidden md:block absolute top-1/2 right-8 w-4 h-4 border-2 border-white/60 rounded-full"></div>
+              {/* Product Image */}
+              <div className="w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px] aspect-[2/3] rounded-lg overflow-hidden relative">
+                <Image
+                  src={featuredProduct?.mainImage?.url || "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"}
+                  alt={featuredProduct?.mainImage?.altText || "Natural Skincare Product"}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 300px"
+                />
               </div>
-
             </div>
           </div>
         </div>
