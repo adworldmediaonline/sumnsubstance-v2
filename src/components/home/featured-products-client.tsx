@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Heart, Star, ShoppingBag, Minus, Plus, Share2 } from 'lucide-react';
 import type { StaticProduct } from '@/constants/static-products-data';
 import { useAddItem } from '@/store/cart-store';
@@ -99,27 +100,22 @@ export function FeaturedProductsClient({
                     <div className="absolute bottom-8 left-8 w-20 h-20 bg-gradient-to-br from-[hsl(var(--primary))]/15 to-transparent rounded-full blur-2xl"></div>
                   </div>
 
-                  {/* Symmetrical Container with Product Image Background */}
-                  <div className="relative z-10 w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] aspect-[2/3]">
-                    <Link href={`/products/${product.slug}`}>
+                  {/* Symmetrical Container with Product Image */}
+                  <div className="relative z-10 w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] aspect-[2/3] mx-auto">
+                    <Link href={`/products/${product.slug}`} className="block w-full h-full">
                       {/* Symmetrical Geometric Container */}
-                      <div className="relative w-full h-full">
-                        {/* Primary Circle - Main Product Display */}
-                        <div
-                          className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm shadow-2xl border border-white/50 overflow-hidden group-hover:scale-105 transition-all duration-500"
-                          style={{
-                            backgroundImage: `url(${product.mainImage?.url ||
-                              '/placeholder-product.jpg'
-                              })`,
-                            backgroundSize: 'contain',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundBlendMode: 'overlay',
-                          }}
-                        >
-                          {/* Overlay gradient for better text visibility */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-[hsl(var(--primary))]/10"></div>
-                        </div>
+                      <div className="relative w-full h-full rounded-3xl bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm shadow-2xl border border-white/50 overflow-hidden group-hover:scale-105 transition-all duration-500">
+                        {/* Product Image - Using Next.js Image for proper sizing */}
+                        <Image
+                          src={product.mainImage?.url || '/placeholder-product.jpg'}
+                          alt={product.mainImage?.altText || product.name}
+                          fill
+                          className="object-contain p-4"
+                          sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 400px"
+                          priority={index < 2}
+                        />
+                        {/* Overlay gradient for better text visibility */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-[hsl(var(--primary))]/10 pointer-events-none"></div>
                       </div>
                     </Link>
 

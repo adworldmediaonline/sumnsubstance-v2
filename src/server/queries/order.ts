@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import type { SerializedOrder } from '@/types/order';
 import { calculateDeliveryDate } from '@/lib/utils/order-utils';
+import { connection } from 'next/server';
 
 interface GetOrdersParams {
   page?: number;
@@ -236,6 +237,9 @@ export async function getOrderById(
 }
 
 export async function calculateOrderAnalytics() {
+  // Explicitly defer to request time to allow non-deterministic operations
+  await connection();
+
   try {
     const [totalOrders, totalRevenue, ordersByStatus, recentOrders] =
       await Promise.all([

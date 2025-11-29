@@ -8,19 +8,13 @@ import { ShoppingCart, DollarSign, TrendingUp } from 'lucide-react';
 import { calculateOrderAnalytics } from '@/server/queries/order';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Suspense } from 'react';
 
-export default async function DashboardPage() {
+async function AnalyticsContent() {
   const analytics = await calculateOrderAnalytics();
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Manage your orders and view product catalog
-        </p>
-      </div>
-
+    <>
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
@@ -84,6 +78,52 @@ export default async function DashboardPage() {
           </div>
         </CardContent>
       </Card>
+    </>
+  );
+}
+
+function AnalyticsSkeleton() {
+  return (
+    <>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {[1, 2, 3].map((i) => (
+          <Card key={i}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <div className="h-4 w-24 bg-muted animate-pulse rounded" />
+              <div className="h-4 w-4 bg-muted animate-pulse rounded" />
+            </CardHeader>
+            <CardContent>
+              <div className="h-8 w-32 bg-muted animate-pulse rounded mb-2" />
+              <div className="h-3 w-48 bg-muted animate-pulse rounded" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <Card>
+        <CardHeader>
+          <div className="h-6 w-40 bg-muted animate-pulse rounded" />
+        </CardHeader>
+        <CardContent>
+          <div className="h-4 w-64 bg-muted animate-pulse rounded" />
+        </CardContent>
+      </Card>
+    </>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <div className="container mx-auto py-6 space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-muted-foreground">
+          Manage your orders and view product catalog
+        </p>
+      </div>
+
+      <Suspense fallback={<AnalyticsSkeleton />}>
+        <AnalyticsContent />
+      </Suspense>
     </div>
   );
 }
