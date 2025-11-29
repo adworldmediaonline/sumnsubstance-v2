@@ -48,7 +48,7 @@ export function NavUser() {
                       src={session?.user?.image ?? ''}
                       alt={session?.user?.name ?? ''}
                     />
-                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                    <AvatarFallback className="rounded-lg">{session?.user?.initials}</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">
