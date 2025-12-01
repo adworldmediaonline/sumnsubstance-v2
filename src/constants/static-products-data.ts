@@ -23,8 +23,7 @@ export const staticProducts = [
     ingredients: `<p>Aqua, Ethylhexyl Methoxycinnamate, Homosalate, Propylene Glycol, Octocrylene, Benzophenone 3, Glycerin, Stearic Acid, Cetearyl Alcohol, Isopropyl Myristate, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Niacinamide, Caprylic/Capric Triglyceride, Sodium Hyaluronate, Glyceryl Stearate Se, C12-15 Alkyl Benzoate, Dicaprylyl Carbonate, Bis-Ethylhexyloxyphenol Methoxyphenyl Triazine, Methylene Bis-Benzotriazolyl Tetramethylbutylphenol (And) Aqua (And) Decyl Glucoside (And) Propylene Glycol (And), Sodium Pyrrolidone Carboxylic Acid, Hydroxyethyl Urea, Squalane, Dimethicone, Phenoxyethanol (And) Ethylhexylglycerin, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Aloe Vera Extract, Cetyl Alcohol, Cucumber Extract, Green Tea Extract, Mulberry Extract, Sunflower Oil, Shea Butter, Argan Oil, Allantoin, Panthenol, Titanium Dioxide, Jojoba Oil, Vitamin E, Peg-7 Glyceryl Cocoate (And) Phenoxyethanol (And) Water, Sandalwood Oil, Sodium Gluconate.</p>
 <p><strong>Caution:</strong> This product may contain ingredients that could cause skin irritation in some individuals. Test on a small area before use.</p>
 <p>For external use only. Store in a dry cool place away from sunlight.</p>`,
-    // price: 855,
-    price: 5,
+    price: 855,
     featured: true, // Featured product flag
     mainImage: {
       url: '/products/spf-lotion/1.webp',
