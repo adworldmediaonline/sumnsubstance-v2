@@ -100,20 +100,27 @@ export function FeaturedProductsClient({
                     <div className="absolute bottom-8 left-8 w-20 h-20 bg-gradient-to-br from-[hsl(var(--primary))]/15 to-transparent rounded-full blur-2xl"></div>
                   </div>
 
-                  {/* Symmetrical Container with Product Image */}
-                  <div className="relative z-10 w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] aspect-[2/3] mx-auto">
+                  {/* Symmetrical Container with Product Image - Circular with object-contain to prevent cropping (1080x1350 images) */}
+                  <div className="relative z-10 w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] aspect-square mx-auto">
                     <Link href={`/products/${product.slug}`} className="block w-full h-full">
                       {/* Symmetrical Geometric Container */}
-                      <div className="relative w-full h-full rounded-3xl bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-sm shadow-2xl border border-white/50 overflow-hidden group-hover:scale-105 transition-all duration-500">
-                        {/* Product Image - Using Next.js Image for proper sizing */}
-                        <Image
-                          src={product.mainImage?.url || '/placeholder-product.jpg'}
-                          alt={product.mainImage?.altText || product.name}
-                          fill
-                          className="object-contain p-4"
-                          sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 400px"
-                          priority={index < 2}
-                        />
+                      <div className="relative w-full h-full rounded-full bg-[#f6f6f6] shadow-2xl border border-white/50 overflow-hidden group-hover:scale-105 transition-all duration-500">
+                        {/* Product Image - Using explicit dimensions with object-contain to ensure full image visibility */}
+                        <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-5 md:p-6 lg:p-8">
+                          <Image
+                            src={product.mainImage?.url || '/placeholder-product.jpg'}
+                            alt={product.mainImage?.altText || product.name}
+                            width={1080}
+                            height={1350}
+                            className="w-auto h-auto max-w-full max-h-full object-contain"
+                            style={{
+                              objectFit: 'contain',
+                              display: 'block'
+                            }}
+                            sizes="(max-width: 640px) 280px, (max-width: 768px) 320px, 400px"
+                            priority={index < 2}
+                          />
+                        </div>
                         {/* Overlay gradient for better text visibility */}
                         <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-[hsl(var(--primary))]/10 pointer-events-none"></div>
                       </div>

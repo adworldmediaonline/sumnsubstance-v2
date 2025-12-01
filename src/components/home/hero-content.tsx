@@ -76,15 +76,25 @@ export default function HeroContent() {
           <div className="relative flex justify-center items-center mt-8 lg:mt-0">
             {/* Main Product Container */}
             <div className="relative">
-              {/* Product Image */}
-              <div className="w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px] aspect-[2/3] rounded-lg overflow-hidden relative">
-                <Image
-                  src={featuredProduct?.mainImage?.url || "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"}
-                  alt={featuredProduct?.mainImage?.altText || "Natural Skincare Product"}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, (max-width: 1024px) 260px, 300px"
-                />
+              {/* Product Image - Circular container ensuring full image visibility */}
+              <div className="w-[240px] sm:w-[300px] md:w-[360px] lg:w-[420px] aspect-square rounded-full overflow-hidden relative bg-[#f6f6f6]">
+                <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-4 md:p-5 lg:p-6">
+                  <div className="relative w-full h-full max-w-full max-h-full">
+                    <Image
+                      src={featuredProduct?.mainImage?.url || "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"}
+                      alt={featuredProduct?.mainImage?.altText || "Natural Skincare Product"}
+                      width={1080}
+                      height={1350}
+                      className="w-auto h-auto max-w-full max-h-full object-contain"
+                      style={{
+                        objectFit: 'contain',
+                        display: 'block',
+                        margin: '0 auto'
+                      }}
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 300px, (max-width: 1024px) 360px, 420px"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

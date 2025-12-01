@@ -119,7 +119,7 @@ export default function ProductDetailsClient({
           {/* Product Images - Sticky on desktop */}
           <div className="space-y-3 lg:space-y-4 lg:sticky lg:top-4 lg:self-start">
             {/* Main Image */}
-            <div className="relative w-full aspect-[2/3] bg-gray-50 rounded-2xl lg:rounded-3xl overflow-hidden group">
+            <div className="relative w-full aspect-[4/5] bg-[#f6f6f6] rounded-2xl lg:rounded-3xl overflow-hidden group">
               <div
                 className={`relative w-full h-full transition-transform duration-300 ${showImageZoom ? 'scale-150' : 'group-hover:scale-105'
                   }`}

@@ -7,8 +7,7 @@ import { Input } from '@/components/ui/input';
 import {
   Facebook,
   Instagram,
-  Twitter,
-  Youtube,
+  Linkedin,
   Shield,
   Truck,
   ChevronRight,
@@ -54,7 +53,7 @@ export default function Footer({ className = '' }: FooterProps) {
     {
       icon: Truck,
       title: 'Free Shipping',
-      description: 'Free Shipping on all domestic prepaid orders above Rs. 1000',
+      description: 'Free Shipping on all domestic Products',
     },
     {
       icon: Shield,
@@ -95,10 +94,9 @@ export default function Footer({ className = '' }: FooterProps) {
   ];
 
   const socialLinks = [
-    { name: 'Facebook', href: '#', icon: Facebook },
-    { name: 'Instagram', href: '#', icon: Instagram },
-    { name: 'Twitter', href: '#', icon: Twitter },
-    { name: 'YouTube', href: '#', icon: Youtube },
+    { name: 'Facebook', href: 'https://www.facebook.com/share/16m1zZVzxD/', icon: Facebook },
+    { name: 'Instagram', href: 'https://www.instagram.com/sumnsubstanceofficial', icon: Instagram },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/sumnsubstance', icon: Linkedin },
   ];
 
   return (

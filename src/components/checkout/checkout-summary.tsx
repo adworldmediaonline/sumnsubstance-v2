@@ -98,6 +98,11 @@ export function CheckoutSummary({}: CheckoutSummaryProps) {
             <span>₹{subtotal.toLocaleString()}</span>
           </div>
 
+          <div className="flex justify-between text-sm">
+            <span>Shipping</span>
+            <span>Free</span>
+          </div>
+
           <Separator />
 
           <div className="flex justify-between font-semibold text-lg">
