@@ -166,7 +166,7 @@ export function OrderSuccessContent() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
+            {/* <Button
               onClick={handleDownloadReceipt}
               variant="outline"
               className="flex items-center gap-2"
@@ -181,7 +181,7 @@ export function OrderSuccessContent() {
             >
               <Share2 className="h-4 w-4" />
               Share Order
-            </Button>
+            </Button> */}
           </div>
         </CardContent>
       </Card>
@@ -301,7 +301,7 @@ export function OrderSuccessContent() {
       </Card>
 
       {/* Next Steps */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>What's Next?</CardTitle>
         </CardHeader>
@@ -332,16 +332,16 @@ export function OrderSuccessContent() {
             </div>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Link href={`/orders/${orderData.orderNumber}`}>
+        {/* <Link href={`/orders/${orderData.orderNumber}`}>
           <Button className="w-full sm:w-auto">
             <Package className="h-4 w-4 mr-2" />
             Track Order
           </Button>
-        </Link>
+        </Link> */}
 
         <Link href="/">
           <Button variant="outline" className="w-full sm:w-auto">
