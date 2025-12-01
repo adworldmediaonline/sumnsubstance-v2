@@ -96,20 +96,6 @@ export default function ProductDetailsClient({
             Home
           </Link>
           <span className="text-gray-400">/</span>
-          <Link
-            href="/products"
-            className="hover:text-primary whitespace-nowrap"
-          >
-            Products
-          </Link>
-          <span className="text-gray-400">/</span>
-          <Link
-            href={`/categories/${product.category.name.toLowerCase()}`}
-            className="hover:text-primary whitespace-nowrap"
-          >
-            {product.category.name}
-          </Link>
-          <span className="text-gray-400">/</span>
           <span className="text-primary font-medium truncate">
             {product.name}
           </span>
