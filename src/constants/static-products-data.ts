@@ -26,28 +26,28 @@ export const staticProducts = [
     price: 855,
     featured: true, // Featured product flag
     mainImage: {
-      url: '/products/spf-lotion/9X4A2016.webp',
+      url: '/products/spf-lotion/1.webp',
       altText: 'Barely There SPF Lotion',
     },
     additionalImages: [
       {
-        url: '/products/spf-lotion/9X4A2017.webp',
+        url: '/products/spf-lotion/2.webp',
         altText: 'Barely There SPF Lotion',
       },
       {
-        url: '/products/spf-lotion/9X4A2020.webp',
+        url: '/products/spf-lotion/3.webp',
         altText: 'Barely There SPF Lotion',
       },
       {
-        url: '/products/spf-lotion/9X4A2022.webp',
+        url: '/products/spf-lotion/4.webp',
         altText: 'Barely There SPF Lotion',
       },
       {
-        url: '/products/spf-lotion/9X4A2024.webp',
+        url: '/products/spf-lotion/5.webp',
         altText: 'Barely There SPF Lotion',
       },
       {
-        url: '/products/spf-lotion/9X4A2026.webp',
+        url: '/products/spf-lotion/6.webp',
         altText: 'Barely There SPF Lotion',
       },
     ],
@@ -82,24 +82,28 @@ export const staticProducts = [
     ingredients: `<p>Dm Water, Glycerin, Isopropyl Myristate, Propanediol, Stearic Acid, Cetearyl Alcohol, Propylene Glycol, Caprylic/Capric Triglyceride, Niacinamide, Betaine, Glyceryl Mono Stearate Se, Shea Butter, Coconut Oil, Jojoba Oil, Dicaprylyl Carbonate, Lactic Acid, Glycolic Acid, Salicylic Acid, Phenoxyethanol (And) Ethylhexylglycerin, Aloe Vera Extract, Carbomer, Cetyl Alcohol, Kokum Butter, Castor Oil, Coco Butter, Dimethicone, Orange Peel Extract, Chamomile Extract, Witch Hazel Extract, Sodium Hyaluronate, Vitamin E, Imidazolidinyl Urea, Allantoin, D-Panthenol, Geranium Oil, Chamomile Oil, Sodium Gluconate.</p>`,
     price: 540,
     mainImage: {
-      url: '/products/footcream/9X4A1997.webp',
+      url: '/products/footcream/1.webp',
       altText: 'Foot Cream',
     },
     additionalImages: [
       {
-        url: '/products/footcream/9X4A1993.webp',
+        url: '/products/footcream/2.webp',
         altText: 'Foot Cream',
       },
       {
-        url: '/products/footcream/9X4A1994.webp',
+        url: '/products/footcream/3.webp',
         altText: 'Foot Cream',
       },
       {
-        url: '/products/footcream/9X4A1996.webp',
+        url: '/products/footcream/4.webp',
         altText: 'Foot Cream',
       },
       {
-        url: '/products/footcream/9X4A1999.webp',
+        url: '/products/footcream/5.webp',
+        altText: 'Foot Cream',
+      },
+      {
+        url: '/products/footcream/6.webp',
         altText: 'Foot Cream',
       },
     ],
@@ -138,24 +142,28 @@ export const staticProducts = [
     ingredients: `<p>Dm Water, Glycerin, Isopropyl Myristate, Propanediol, Caprylic/Capric Triglyceride, Cetearyl Alcohol, Grape Seed Oil, Shea Butter, Acetamidoethoxyethanol, Niacinamide, Propylene Glycol, Sodium Hyaluronate, C12-15 Alkyl Benzoate, Hydroxyethyl Urea, Squalane, Rose Water, Sodium Polyglutamate Crosspolymer, Phenoxyethanol (And) Ethylhexylglycerin (And) Octenidine Hcl, Aloe Vera Extract, Cetyl Alcohol, Argan Oil, Licorice Extract, With Hazel Extract, Oat Extract, Sodium Pyrrolidone Carboxylic Acid, Polysorbate 20, Pomegranate Extract, Panthenol, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Vitamin E, Peg-7 Glyceryl Cocoate (And) Phenoxyethanol (And) Water, Sodium Gluconate, Rose Oil, Jasmine Oil, Vanilla Oil.</p>`,
     price: 885,
     mainImage: {
-      url: '/products/age/9X4A2034.webp',
+      url: '/products/age/1.webp',
       altText: 'Age Defying Lotion',
     },
     additionalImages: [
       {
-        url: '/products/age/9X4A2031.webp',
+        url: '/products/age/2.webp',
         altText: 'Age Defying Lotion',
       },
       {
-        url: '/products/age/9X4A2033.webp',
+        url: '/products/age/3.webp',
         altText: 'Age Defying Lotion',
       },
       {
-        url: '/products/age/9X4A2036.webp',
+        url: '/products/age/4.webp',
         altText: 'Age Defying Lotion',
       },
       {
-        url: '/products/age/9X4A2038.webp',
+        url: '/products/age/5.webp',
+        altText: 'Age Defying Lotion',
+      },
+      {
+        url: '/products/age/6.webp',
         altText: 'Age Defying Lotion',
       },
     ],
@@ -196,23 +204,27 @@ export const staticProducts = [
     ingredients: `<p>Dm Water, Stearic Acid, Glycerin, Caprylic/Capric Triglyceride, Coconut Oil, Cetearyl Alcohol, Decyl Glucoside, Walnut Shell Powder, Niacinamide, Glyceryl Mono Stearate Se, Jojoba Oil, Glyceryl Stearate (And) Peg-100 Stearate, Kaolin, Lactic Acid, Glycolic Acid, Phenoxyethanol (And) Ethylhexylglycerin, Carbomer, Aloe Vera Extract, Shea Butter, Coco Butter, Olive Oil, Green Tea Extract, Witch Hazel Extract, Licorice Extract, Imidazolidinyl Urea, Vitamin E, Sandalwood Oil, Jasmine Oil, Sodium Gluconate.</p>`,
     price: 625,
     mainImage: {
-      url: '/products/hand-and-foot-scrub/9X4A2008.webp',
+      url: '/products/hand-and-foot-scrub/1.webp',
       altText: 'Hand & Foot Scrub',
     },
     additionalImages: [{
-      url: '/products/hand-and-foot-scrub/9X4A2004.webp',
+      url: '/products/hand-and-foot-scrub/2.webp',
       altText: 'Hand & Foot Scrub',
     },
     {
-      url: '/products/hand-and-foot-scrub/9X4A2007.webp',
+      url: '/products/hand-and-foot-scrub/3.webp',
       altText: 'Hand & Foot Scrub',
     },
     {
-      url: '/products/hand-and-foot-scrub/9X4A2012.webp',
+      url: '/products/hand-and-foot-scrub/4.webp',
       altText: 'Hand & Foot Scrub',
     },
     {
-      url: '/products/hand-and-foot-scrub/9X4A2013.webp',
+      url: '/products/hand-and-foot-scrub/5.webp',
+      altText: 'Hand & Foot Scrub',
+    },
+    {
+      url: '/products/hand-and-foot-scrub/6.webp',
       altText: 'Hand & Foot Scrub',
     },
     ],
@@ -248,28 +260,28 @@ export const staticProducts = [
     ingredients: `<p>Aqua, Glycerin, Isopropyl Myristate, Propanediol, Stearic Acid, Cetearyl Alcohol, Propylene Glycol, Caprylic/Capric Triglyceride, Shea Butter, Niacinamide, Sodium Hyaluronate, Glyceryl Mono Stearate Se, Coconut Oil, Jojoba Oil, Grapeseed Oil, Dicaprylyl Carbonate, Hydroxyethyl Urea, Phenoxyethanol (And) Ethylhexylglycerin, Aloe Vera Extract, Salicylic Acid, Betaine, Carbomer, Cetyl Alcohol, Apricot Oil, Castor Oil, Avocado Oil, Lactic Acid, Argan Oil, Dimethicone, Orange Peel Extract, Mulberry Extract, Witch Hazel Extract, Vitamin E, Jasmine Oil, Allantoin, D Panthenol, Neroli Oil, Sodium Gluconate.</p>`,
     price: 510,
     mainImage: {
-      url: '/products/handcream/hand-cream.webp',
+      url: '/products/handcream/1.webp',
       altText: 'Sum N Substance Hand Cream',
     },
     additionalImages: [
       {
-        url: '/products/handcream/9X4A1984.webp',
+        url: '/products/handcream/2.webp',
         altText: 'Sum N Substance Hand Cream',
       },
       {
-        url: '/products/handcream/9X4A1985.webp',
+        url: '/products/handcream/3.webp',
         altText: 'Sum N Substance Hand Cream',
       },
       {
-        url: '/products/handcream/9X4A1986.webp',
+        url: '/products/handcream/4.webp',
         altText: 'Sum N Substance Hand Cream',
       },
       {
-        url: '/products/handcream/9X4A1988.webp',
+        url: '/products/handcream/5.webp',
         altText: 'Sum N Substance Hand Cream',
       },
       {
-        url: '/products/handcream/9X4A1989.webp',
+        url: '/products/handcream/6.webp',
         altText: 'Sum N Substance Hand Cream',
       },
     ],
