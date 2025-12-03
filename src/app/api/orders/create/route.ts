@@ -120,6 +120,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Note: WareIQ sync happens after payment verification in /api/payments/verify
+    // This ensures orders are only synced when payment is confirmed
+
     // Return order data
     return NextResponse.json({
       success: true,

@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import prisma from '@/lib/prisma';
 import { razorpayPaymentSchema } from '@/lib/validations/order';
 import { sendOrderConfirmationEmail } from '@/lib/email/order-emails';
+import { createWareIQService } from '@/lib/wareiq';
 
 // Helper function to serialize order data for email
 function serializeOrderData(order: {
@@ -98,6 +99,22 @@ export async function POST(request: NextRequest) {
     } catch (emailError) {
       console.error('Failed to send order confirmation email:', emailError);
       // Don't fail the payment verification if email fails
+    }
+
+    // Sync order to WareIQ after payment confirmation (for prepaid orders)
+    try {
+      const wareIQService = createWareIQService();
+      const syncResult = await wareIQService.syncOrderToWareIQ(order);
+
+      if (!syncResult.success) {
+        console.error('WareIQ sync failed for confirmed order:', syncResult.error);
+        // Don't fail payment verification if WareIQ sync fails
+      } else {
+        console.log('Order synced to WareIQ successfully:', order.orderNumber);
+      }
+    } catch (wareIQError) {
+      console.error('WareIQ sync error (non-blocking):', wareIQError);
+      // Continue - payment is already verified and order is confirmed
     }
 
     return NextResponse.json({

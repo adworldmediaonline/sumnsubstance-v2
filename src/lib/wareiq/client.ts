@@ -9,6 +9,8 @@ import type {
   EasyEcomConfig,
   EasyEcomAuthCredentials,
   EasyEcomTokenResponse,
+  EasyEcomCreateProductPayload,
+  EasyEcomUpdateProductPayload,
 } from './types';
 
 export class EasyEcomClient {
@@ -73,15 +75,36 @@ export class EasyEcomClient {
           );
         }
 
-        // Extract token from response (could be 'token' or 'access_token')
-        const token = data.token || data.access_token;
+        // Extract token from response - handle nested structure
+        // Response can be: { token: "..." } or { data: { token: { jwt_token: "..." } } }
+        let token: string | undefined;
+
+        if (typeof data.token === 'string') {
+          token = data.token;
+        } else if (data.token && typeof data.token === 'object' && 'jwt_token' in data.token) {
+          token = data.token.jwt_token;
+        } else if (data.data?.token) {
+          if (typeof data.data.token === 'string') {
+            token = data.data.token;
+          } else if (typeof data.data.token === 'object' && 'jwt_token' in data.data.token) {
+            token = data.data.token.jwt_token;
+          }
+        } else if (data.access_token) {
+          token = data.access_token;
+        }
+
         if (!token) {
+          console.error('Token response structure:', JSON.stringify(data, null, 2));
           throw new Error('Token not found in response');
         }
 
-        // Cache token (assume it's valid for 1 hour, adjust based on actual expiry)
+        // Cache token - use expires_in if available, otherwise default to 1 hour
         this.cachedToken = token;
-        this.tokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+        const expiresIn =
+          (typeof data.token === 'object' && data.token?.expires_in) ||
+          data.data?.token && typeof data.data.token === 'object' && data.data.token?.expires_in ||
+          3600; // Default 1 hour
+        this.tokenExpiry = new Date(Date.now() + expiresIn * 1000);
 
         return token;
       } catch (error) {
@@ -110,7 +133,17 @@ export class EasyEcomClient {
     try {
       const token = await this.getAuthToken();
 
-      const response = await fetch(`${this.baseUrl}/orders`, {
+      // EasyEcom order creation endpoint
+      const orderEndpoint = `${this.baseUrl}/webhook/v2/createOrder`;
+
+      console.log('Creating order in EasyEcom:', {
+        endpoint: orderEndpoint,
+        orderNumber: orderPayload.orderNumber,
+        hasToken: !!token,
+        tokenPreview: token ? token.substring(0, 20) + '...' : 'none',
+      });
+
+      const response = await fetch(orderEndpoint, {
         method: 'POST',
         headers: {
           'x-api-key': this.apiKey,
@@ -120,13 +153,69 @@ export class EasyEcomClient {
         body: JSON.stringify(orderPayload),
       });
 
-      const data = await response.json();
+      // Check content type before parsing
+      const contentType = response.headers.get('content-type');
+      const responseText = await response.text();
+
+      // If response is HTML, it's likely an error page
+      if (!contentType?.includes('application/json')) {
+        console.error('EasyEcom API returned non-JSON response:');
+        console.error('Status:', response.status, response.statusText);
+        console.error('Content-Type:', contentType);
+        console.error('Response preview:', responseText.substring(0, 500));
+
+        return {
+          success: false,
+          error: `API returned ${contentType || 'non-JSON'} response`,
+          message: `Failed to create order: Server returned HTML instead of JSON (status ${response.status})`,
+        };
+      }
+
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse JSON response:', responseText.substring(0, 500));
+        return {
+          success: false,
+          error: 'Invalid JSON response from API',
+          message: 'Failed to parse API response',
+        };
+      }
+
+      // Log the full response for debugging
+      console.log('EasyEcom API response:', {
+        status: response.status,
+        statusText: response.statusText,
+        data: JSON.stringify(data, null, 2),
+      });
 
       if (!response.ok) {
         return {
           success: false,
-          error: data.message || `API error: ${response.statusText}`,
+          error: data.message || data.error || `API error: ${response.statusText}`,
           message: data.message || `Failed to create order: ${response.status}`,
+          data: data, // Include full response for debugging
+        };
+      }
+
+      // Check if the response indicates an error (EasyEcom returns errors with code field even on HTTP 200)
+      if (data.code && data.code !== 200 && data.code >= 400) {
+        return {
+          success: false,
+          error: data.message || data.error || `API error: code ${data.code}`,
+          message: data.message || `Order creation failed: ${data.code}`,
+          data: data,
+        };
+      }
+
+      // Check if the response indicates success (some APIs return success: false even with 200)
+      if (data.success === false || data.error) {
+        return {
+          success: false,
+          error: data.error || data.message || 'Order creation failed',
+          message: data.message || 'Order creation was not successful',
+          data: data,
         };
       }
 
@@ -138,10 +227,234 @@ export class EasyEcomClient {
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Unknown error occurred';
+      console.error('EasyEcom order creation error:', errorMessage);
       return {
         success: false,
         error: errorMessage,
         message: `Failed to create order: ${errorMessage}`,
+      };
+    }
+  }
+
+  /**
+   * Create a product in WareIQ/EasyEcom
+   * POST /Products/CreateMasterProduct
+   */
+  async createProduct(
+    productPayload: EasyEcomCreateProductPayload
+  ): Promise<EasyEcomApiResponse> {
+    try {
+      const token = await this.getAuthToken();
+      const productEndpoint = `${this.baseUrl}/Products/CreateMasterProduct`;
+
+      console.log('Creating product in EasyEcom:', {
+        endpoint: productEndpoint,
+        sku: productPayload.Sku,
+        hasToken: !!token,
+        itemType: productPayload.itemType,
+        hasSubProducts: !!productPayload.subProducts,
+        subProductsLength: productPayload.subProducts?.length || 0,
+      });
+
+      // Log the full payload for debugging
+      console.log('Product payload being sent:', JSON.stringify(productPayload, null, 2));
+
+      const response = await fetch(productEndpoint, {
+        method: 'POST',
+        headers: {
+          'x-api-key': this.apiKey,
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productPayload),
+      });
+
+      const contentType = response.headers.get('content-type');
+      const responseText = await response.text();
+
+      if (!contentType?.includes('application/json')) {
+        console.error('EasyEcom API returned non-JSON response:');
+        console.error('Status:', response.status, response.statusText);
+        console.error('Content-Type:', contentType);
+        console.error('Response preview:', responseText.substring(0, 500));
+
+        return {
+          success: false,
+          error: `API returned ${contentType || 'non-JSON'} response`,
+          message: `Failed to create product: Server returned HTML instead of JSON (status ${response.status})`,
+        };
+      }
+
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse JSON response:', responseText.substring(0, 500));
+        return {
+          success: false,
+          error: `Failed to parse JSON response: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`,
+          message: `Failed to create product: Invalid JSON response from API (status ${response.status})`,
+        };
+      }
+
+      // Log the full response for debugging
+      console.log('EasyEcom product creation response:', {
+        status: response.status,
+        statusText: response.statusText,
+        data: JSON.stringify(data, null, 2),
+      });
+
+      if (!response.ok) {
+        return {
+          success: false,
+          error: data.message || data.error || `API error: ${response.statusText}`,
+          message: data.message || `Failed to create product: ${response.status}`,
+          data: data,
+        };
+      }
+
+      // Check if the response indicates an error (EasyEcom returns errors with code field even on HTTP 200)
+      if (data.code && data.code !== 200 && data.code >= 400) {
+        return {
+          success: false,
+          error: data.message || data.error || `API error: code ${data.code}`,
+          message: data.message || `Product creation failed: ${data.code}`,
+          data: data,
+        };
+      }
+
+      // Check if the response indicates success (some APIs return success: false even with 200)
+      if (data.success === false || data.error) {
+        return {
+          success: false,
+          error: data.error || data.message || 'Product creation failed',
+          message: data.message || 'Product creation was not successful',
+          data: data,
+        };
+      }
+
+      return {
+        success: true,
+        data,
+        message: 'Product created successfully',
+      };
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
+      console.error('EasyEcom product creation error:', errorMessage);
+      return {
+        success: false,
+        error: errorMessage,
+        message: `Failed to create product: ${errorMessage}`,
+      };
+    }
+  }
+
+  /**
+   * Update a product in WareIQ/EasyEcom
+   * POST /Products/UpdateMasterProduct
+   */
+  async updateProduct(
+    productPayload: EasyEcomUpdateProductPayload
+  ): Promise<EasyEcomApiResponse> {
+    try {
+      const token = await this.getAuthToken();
+      const productEndpoint = `${this.baseUrl}/Products/UpdateMasterProduct`;
+
+      console.log('Updating product in EasyEcom:', {
+        endpoint: productEndpoint,
+        productId: productPayload.productId,
+        hasToken: !!token,
+      });
+
+      const response = await fetch(productEndpoint, {
+        method: 'POST',
+        headers: {
+          'x-api-key': this.apiKey,
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productPayload),
+      });
+
+      const contentType = response.headers.get('content-type');
+      const responseText = await response.text();
+
+      if (!contentType?.includes('application/json')) {
+        console.error('EasyEcom API returned non-JSON response:');
+        console.error('Status:', response.status, response.statusText);
+        console.error('Content-Type:', contentType);
+        console.error('Response preview:', responseText.substring(0, 500));
+
+        return {
+          success: false,
+          error: `API returned ${contentType || 'non-JSON'} response`,
+          message: `Failed to update product: Server returned HTML instead of JSON (status ${response.status})`,
+        };
+      }
+
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse JSON response:', responseText.substring(0, 500));
+        return {
+          success: false,
+          error: `Failed to parse JSON response: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`,
+          message: `Failed to update product: Invalid JSON response from API (status ${response.status})`,
+        };
+      }
+
+      // Log the full response for debugging
+      console.log('EasyEcom product update response:', {
+        status: response.status,
+        statusText: response.statusText,
+        data: JSON.stringify(data, null, 2),
+      });
+
+      if (!response.ok) {
+        return {
+          success: false,
+          error: data.message || data.error || `API error: ${response.statusText}`,
+          message: data.message || `Failed to update product: ${response.status}`,
+          data: data,
+        };
+      }
+
+      // Check if the response indicates an error (EasyEcom returns errors with code field even on HTTP 200)
+      if (data.code && data.code !== 200 && data.code >= 400) {
+        return {
+          success: false,
+          error: data.message || data.error || `API error: code ${data.code}`,
+          message: data.message || `Product update failed: ${data.code}`,
+          data: data,
+        };
+      }
+
+      // Check if the response indicates success (some APIs return success: false even with 200)
+      if (data.success === false || data.error) {
+        return {
+          success: false,
+          error: data.error || data.message || 'Product update failed',
+          message: data.message || 'Product update was not successful',
+          data: data,
+        };
+      }
+
+      // Success response from WareIQ: { code: 200, message: "Product Updated Successfully", data: { productId: ... } }
+      return {
+        success: true,
+        data,
+        message: data.message || 'Product updated successfully',
+      };
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
+      console.error('EasyEcom product update error:', errorMessage);
+      return {
+        success: false,
+        error: errorMessage,
+        message: `Failed to update product: ${errorMessage}`,
       };
     }
   }

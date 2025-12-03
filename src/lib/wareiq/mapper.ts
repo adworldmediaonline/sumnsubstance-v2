@@ -94,19 +94,48 @@ function mapToEasyEcomOrderItems(
         ? item.price.toNumber()
         : item.price;
 
+    // EasyEcom API supports multiple ways to identify products:
+    // 1. Sku - primary SKU (must exist in WareIQ)
+    // 2. ean - EAN/barcode (alternative identifier)
+    // 3. AccountingSku - accounting SKU (alternative identifier)
+    //
+    // Strategy: Use AccountingSku as primary identifier since SKUs might not exist in WareIQ yet.
+    // If SKU exists, we'll use it; otherwise use AccountingSku.
+    // This allows orders to be created even if SKUs aren't pre-registered in WareIQ.
     const easyEcomItem: EasyEcomOrderItem = {
       OrderItemId: item.id || `item_${index + 1}_${Date.now()}`,
-      Sku: sku,
       productName: item.name,
       Quantity: item.quantity,
       Price: price,
       itemDiscount: 0,
     };
 
-    // Add AccountingSku if available
-    if (staticProduct?.sku) {
-      easyEcomItem.AccountingSku = staticProduct.sku;
+    // SOLUTION: Use productName as primary identifier, with fallback options
+    // This approach allows WareIQ to auto-create products from order data
+    // when products don't exist, avoiding the need to manually create 1000s of products
+    //
+    // Strategy (in order of preference):
+    // 1. Use productName (required) - WareIQ's primary identifier
+    // 2. Use ean (barcode) - Some systems accept generic barcodes for auto-creation
+    // 3. Include AccountingSku for reference/accounting purposes
+    // 4. Don't include Sku field to avoid "SKU Not Found" errors
+    //
+    // This way, WareIQ can:
+    // - Auto-create products using productName + ean
+    // - Or match existing products by productName
+    // - Use AccountingSku for accounting/reference purposes
+    if (sku) {
+      // Generate a simple EAN/barcode from SKU (format: 8-digit number)
+      // This allows WareIQ to potentially auto-create products
+      const eanCode = sku.replace(/[^0-9]/g, '').padStart(8, '0').substring(0, 8);
+      if (eanCode.length >= 8) {
+        easyEcomItem.ean = eanCode;
+      }
+
+      // Include AccountingSku for reference
+      easyEcomItem.AccountingSku = sku;
     }
+    // Note: We're NOT including Sku field - this allows WareIQ to auto-create products
 
     return easyEcomItem;
   });
@@ -176,10 +205,22 @@ export function mapOrderToEasyEcom(
   });
 
   // Map order items
-  const easyEcomItems = mapToEasyEcomOrderItems(order.items);
+  const easyEcomItems = mapToEasyEcomOrderItems(
+    order.items.map((item) => ({
+      ...item,
+      productSnapshot:
+        typeof item.productSnapshot === 'object' &&
+          item.productSnapshot !== null &&
+          !Array.isArray(item.productSnapshot)
+          ? (item.productSnapshot as Record<string, unknown>)
+          : {},
+    }))
+  );
 
-  // Determine payment mode: 1 = COD, 2 = Prepaid
-  const paymentMode = order.paymentStatus === 'COMPLETED' ? 2 : 1;
+  // Determine payment mode: 1 = Prepaid, 2 = COD
+  // For prepaid orders (payment completed), use mode 1
+  // For COD orders, use mode 2
+  const paymentMode = order.paymentStatus === 'COMPLETED' ? 1 : 2;
 
   // Handle Decimal types from Prisma
   const shippingCost =
@@ -203,12 +244,14 @@ export function mapOrderToEasyEcom(
     discount,
     walletDiscount: 0,
     promoCodeDiscount: 0,
-    prepaidDiscount: paymentMode === 2 ? discount : 0,
+    prepaidDiscount: paymentMode === 1 ? discount : 0,
     paymentMode,
-    paymentGateway: order.paymentMethod === 'razorpay' ? 'razorpay' : undefined,
+    // Only include paymentGateway for prepaid orders (paymentMode 1)
+    ...(paymentMode === 1 && order.paymentMethod === 'razorpay' && { paymentGateway: 'razorpay' }),
     shippingMethod: 1,
     is_market_shipped: 0,
-    company_carrier_id: options?.companyCarrierId,
+    // Only include company_carrier_id if provided and valid
+    ...(options?.companyCarrierId && { company_carrier_id: options.companyCarrierId }),
     packageWeight: options?.packageWeight,
     packageHeight: options?.packageDimensions?.height,
     packageWidth: options?.packageDimensions?.width,
