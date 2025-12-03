@@ -3,6 +3,7 @@ export const staticProducts = [
     id: '1',
     name: 'Barely There SPF Lotion',
     slug: 'barely-there-spf-lotion',
+    sku: 'SNS-SPF-250',
     tagline: 'SPF 50 | PA+++ | 250 ml',
     excerpt: 'Light on skin. Big on protection.',
     description: `<p>No more sticky sunscreens or white cast. This is SPF that actually feels good to wear—lightweight, non-greasy, and hydrating. Barely There SPF Lotion blends in like a second skin while shielding you from UVA and UVB damage.</p>
@@ -61,6 +62,7 @@ export const staticProducts = [
     id: '2',
     name: 'Foot Cream',
     slug: 'foot-cream',
+    sku: 'SNS-FC-075',
     tagline: 'Removes Dry Skin & Delivers Lasting Moisture',
     excerpt: '75ml / 2.53oz',
     description: `<h3>🦶✨ Start here for soft, smooth feet...</h3>
@@ -117,6 +119,7 @@ export const staticProducts = [
     id: '3',
     name: 'Age Defying Lotion',
     slug: 'age-defying-lotion',
+    sku: 'SNS-ADL-001',
     tagline: 'For ages 25–55',
     excerpt: '💧 Hydrate. ✨ Restore. 🌸 Glow Naturally.',
     description: `<h3>About the Product:</h3>
@@ -177,6 +180,7 @@ export const staticProducts = [
     id: '4',
     name: 'Hand & Foot Scrub',
     slug: 'hand-foot-scrub',
+    sku: 'SNS-HFS-100',
     tagline: 'Exfoliating & Moisturizing Body Scrub',
     excerpt: '100ml / 3.38oz',
     description: `<h3>Smooth. Nourish. Refresh.</h3>
@@ -238,6 +242,7 @@ export const staticProducts = [
     id: '5',
     name: 'Hand Cream',
     slug: 'hand-cream',
+    sku: 'SNS-HC-050',
     tagline: '50ml / 1.69oz',
     excerpt: '✨ Hydration That Feels Good. Skin That Looks Even Better.',
     description: `<h3>About the product</h3>
