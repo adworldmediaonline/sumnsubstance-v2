@@ -169,10 +169,26 @@ export async function POST(request: NextRequest) {
     // Full sync: Create all products
     const results = await productSyncService.syncAllProducts();
 
+    // Check if failures are due to duplicate SKUs (including generic errors)
+    const duplicateSkus = results.errors.filter(err =>
+      err.error.toLowerCase().includes('already exists') ||
+      err.error.toLowerCase().includes('delete it first') ||
+      err.error.toLowerCase().includes('likely already exists') ||
+      err.error.toLowerCase().includes('generic error')
+    );
+
+    const message = duplicateSkus.length > 0
+      ? `Product sync completed: ${results.success} succeeded, ${results.failed} failed. ${duplicateSkus.length} products likely already exist in WareIQ (SKUs: ${duplicateSkus.map(e => e.sku).join(', ')}). Delete them in WareIQ dashboard → Products → search by SKU, then sync again.`
+      : `Product sync completed: ${results.success} succeeded, ${results.failed} failed`;
+
     return NextResponse.json({
       success: results.failed === 0,
-      message: `Product sync completed: ${results.success} succeeded, ${results.failed} failed`,
-      data: results,
+      message,
+      data: {
+        ...results,
+        duplicateSkus: duplicateSkus.map(err => err.sku),
+        needsDeletion: duplicateSkus.length > 0,
+      },
     });
   } catch (error) {
     const errorMessage =

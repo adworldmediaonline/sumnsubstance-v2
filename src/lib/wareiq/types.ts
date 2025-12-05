@@ -70,6 +70,7 @@ export interface EasyEcomApiResponse<T = unknown> {
   data?: T;
   message?: string;
   error?: string;
+  isDuplicateSku?: boolean; // Flag to indicate if error is due to duplicate SKU
 }
 
 export interface EasyEcomAuthCredentials {
@@ -108,11 +109,11 @@ export interface EasyEcomCreateProductPayload {
   Sku: string; // Required
   Category: string; // Required
   ModelNumber: string; // Required
-  Cost: number; // Required (as number/double)
-  Weight: number; // Required (in grams, as integer)
-  Length: number; // Required (in cm, as integer)
-  Height: number; // Required (in cm, as integer)
-  Width: number; // Required (in cm, as integer)
+  Cost: number | string; // Required (as number/double or string - API accepts both)
+  Weight: number | string; // Required (in grams, as integer or string)
+  Length: number | string; // Required (in cm, as integer or string)
+  Height: number | string; // Required (in cm, as integer or string)
+  Width: number | string; // Required (in cm, as integer or string)
   TaxRate: number; // Required (integer: 0, 3, 5, 12, 18, 28)
   TaxRuleName: string; // Required (API requires this even though docs mention TaxRate)
   materialType: number; // Required (1 = Finished Good, 2 = Raw Good, 3 = Packaging Material, 4 = Marketing Material)
@@ -123,7 +124,7 @@ export interface EasyEcomCreateProductPayload {
   ModelName?: string;
   Description?: string;
   EANUPC?: string; // EAN/UPC
-  Mrp?: number; // Maximum Retail Price (as number/double)
+  Mrp?: number | string; // Maximum Retail Price (as number/double or string)
   ProductTaxCode?: string; // HSN Code
   Size?: string;
   Color?: string;

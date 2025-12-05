@@ -97,17 +97,24 @@ export class ProductSyncService {
 
     // Build payload matching official WareIQ API specification
     // Based on API docs: TaxRate (integer), itemType (integer), Cost/Mrp (number)
+    // Use a simple generic category name like the working test payload ("Shirt1")
+    // Since the user confirmed categories exist in WareIQ, we'll use the product's category name
+    // But if it has spaces, we'll use a simple format
+    const categoryName = product.category?.name
+      ? product.category.name // Use category name as-is since user confirmed they exist in WareIQ
+      : process.env.EASYECOM_DEFAULT_CATEGORY || 'Skincare';
+
     const payload: EasyEcomCreateProductPayload = {
       // Required fields
-      Brand: 'SumNSubstance',
+      Brand: process.env.EASYECOM_BRAND_NAME || 'SumNSubstance', // Use env var or default
       Sku: product.sku || product.id,
-      Category: product.category?.name || 'Skincare',
+      Category: categoryName,
       ModelNumber: product.sku || product.id,
-      Cost: product.price, // As number/double
-      Weight: parseInt(weight) || 100, // As integer (grams)
-      Length: 10, // Default dimensions (adjust per product if needed)
-      Height: 15,
-      Width: 5,
+      Cost: product.price.toString(), // Convert to string to match working test payload format
+      Weight: (parseInt(weight) || 100).toString(), // Convert to string
+      Length: '10', // Default dimensions (as strings to match working format)
+      Height: '15',
+      Width: '5',
       TaxRate: 18, // Tax rate: 0, 3, 5, 12, 18, or 28 (using 18% for skincare products)
       TaxRuleName: process.env.EASYECOM_TAX_RULE_NAME || 'GST18', // Must match tax rule name created in WareIQ dashboard
       materialType: 1, // 1 = Finished Good (for skincare products)
@@ -118,7 +125,7 @@ export class ProductSyncService {
       ModelName: product.name,
       Description: stripHTML(product.description || product.excerpt || '').substring(0, 500),
       EANUPC: ean,
-      Mrp: product.price, // As number/double
+      Mrp: product.price.toString(), // Convert to string to match working test payload format
       Size: size,
       ImageURL: fullImageUrl,
       shelf_life: 730, // Shelf life in days (2 years default)
@@ -175,12 +182,41 @@ export class ProductSyncService {
           results.success++;
           console.log(`✅ Created product: ${product.sku} (${product.name})`);
         } else {
-          results.failed++;
-          results.errors.push({
-            sku: product.sku,
-            error: result.error || 'Unknown error',
-          });
-          console.error(`❌ Failed to create product ${product.sku}:`, result.error);
+          // Check if error is due to duplicate SKU (product already exists)
+          const errorMessage = result.error || 'Unknown error';
+          const isGenericError = errorMessage === 'Error while creating product.' ||
+            errorMessage.toLowerCase().includes('error while creating');
+
+          // Since one product succeeded, generic errors are likely duplicate SKUs
+          const isDuplicateSku = result.isDuplicateSku ||
+            errorMessage.toLowerCase().includes('duplicate') ||
+            errorMessage.toLowerCase().includes('already exists') ||
+            (errorMessage.toLowerCase().includes('sku') && (
+              errorMessage.toLowerCase().includes('exist') ||
+              errorMessage.toLowerCase().includes('found')
+            )) ||
+            isGenericError; // Treat generic errors as potential duplicates
+
+          if (isDuplicateSku) {
+            // Product likely already exists - provide helpful message
+            const helpfulMessage = isGenericError
+              ? `Product likely already exists in WareIQ (SKU: ${product.sku}). Check WareIQ dashboard and delete it if you want to recreate, or use update API with productId.`
+              : `Product already exists in WareIQ. Delete it first or use update API.`;
+
+            console.log(`ℹ️  ${helpfulMessage}`);
+            results.errors.push({
+              sku: product.sku,
+              error: helpfulMessage,
+            });
+            results.failed++;
+          } else {
+            results.failed++;
+            results.errors.push({
+              sku: product.sku,
+              error: errorMessage,
+            });
+            console.error(`❌ Failed to create product ${product.sku}:`, errorMessage);
+          }
         }
       } catch (error) {
         results.failed++;

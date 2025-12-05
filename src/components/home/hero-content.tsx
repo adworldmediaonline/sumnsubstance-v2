@@ -1,101 +1,97 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { staticProducts } from '@/constants/static-products-data';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { useState } from 'react';
 
 export default function HeroContent() {
-  // Get the featured product
-  const featuredProduct = staticProducts.find(p => p.featured);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="relative min-h-screen bg-primary overflow-x-hidden">
-
+    <section className="relative min-h-screen bg-primary overflow-x-hidden pt-10">
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-20 sm:pt-24">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[calc(100vh-120px)]">
-          {/* Left Content */}
-          <div className="space-y-6 sm:space-y-8 w-full">
-            {/* Main Heading */}
-            <div className="space-y-3 sm:space-y-4 w-full">
-              {featuredProduct ? (
-                <>
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white leading-tight w-full">
-                    {featuredProduct.name}
-                  </h1>
-                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 font-medium w-full">
-                    {featuredProduct.tagline}
-                  </p>
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed w-full">
-                    {featuredProduct.excerpt}
-                  </p>
-
-                  {/* Price */}
-                  <div className="flex items-center gap-4">
-                    <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-                      ₹{featuredProduct.price}
-                    </span>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight w-full">
-                    Natural
-                    <br />
-                    <span className="text-white font-bold">
-                      Beauty
-                    </span>
-                  </h1>
-
-                  <p className="text-base sm:text-lg lg:text-xl text-white/90 leading-relaxed w-full">
-                    Transform your skin with our premium collection of natural,
-                    organic skincare products designed for radiant, healthy beauty.
-                  </p>
-                </>
-              )}
-            </div>
-
-            {/* CTA Button */}
-            {featuredProduct && (
-              <Button
-                asChild
-                size="lg"
-                className="bg-white hover:bg-white/90 text-primary px-6 py-4 sm:px-8 sm:py-6 text-base sm:text-lg font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
-              >
-                <Link href={`/products/${featuredProduct.slug}`}>
-                  Shop Now
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-                </Link>
-              </Button>
-            )}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 pt-16 sm:pt-20 lg:pt-24 pb-20 sm:pb-24">
+        {/* Products Grid/Carousel */}
+        <div className="w-full">
+          {/* Desktop Grid View - Hidden on mobile/tablet */}
+          <div className="hidden lg:grid lg:grid-cols-5 gap-4 xl:gap-6">
+            {staticProducts.map((product, index) => (
+              <ProductCard key={product.id} product={product} index={index} />
+            ))}
           </div>
 
-          {/* Right Product Display */}
-          <div className="relative flex justify-center items-center mt-8 lg:mt-0">
-            {/* Main Product Container */}
-            <div className="relative">
-              {/* Product Image - Circular container ensuring full image visibility */}
-              <div className="w-[240px] sm:w-[300px] md:w-[360px] lg:w-[420px] aspect-square rounded-full overflow-hidden relative bg-[#f6f6f6]">
-                <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-4 md:p-5 lg:p-6">
-                  <div className="relative w-full h-full max-w-full max-h-full">
-                    <Image
-                      src={featuredProduct?.mainImage?.url || "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop&crop=center"}
-                      alt={featuredProduct?.mainImage?.altText || "Natural Skincare Product"}
-                      width={1080}
-                      height={1350}
-                      className="w-auto h-auto max-w-full max-h-full object-contain"
-                      style={{
-                        objectFit: 'contain',
-                        display: 'block',
-                        margin: '0 auto'
-                      }}
-                      sizes="(max-width: 640px) 240px, (max-width: 768px) 300px, (max-width: 1024px) 360px, 420px"
-                    />
-                  </div>
-                </div>
-              </div>
+          {/* Mobile/Tablet Carousel - Visible on smaller screens */}
+          <div className="lg:hidden relative">
+            <Swiper
+              modules={[Navigation, Autoplay]}
+              spaceBetween={16}
+              slidesPerView={1.2}
+              loop={true}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              navigation={{
+                prevEl: '.hero-prev',
+                nextEl: '.hero-next',
+              }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 2.5,
+                  spaceBetween: 24,
+                },
+              }}
+              onSlideChange={(swiper) => {
+                // Use realIndex for loop mode to get the actual slide index
+                setActiveIndex(swiper.realIndex);
+              }}
+              className="w-full"
+              style={{ overflow: 'visible' }}
+            >
+              {staticProducts.map((product, index) => (
+                <SwiperSlide key={product.id} className="h-auto">
+                  <ProductCard product={product} index={index} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* Navigation Buttons */}
+            <button
+              className="hero-prev absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-primary rounded-full p-2 sm:p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+              aria-label="Previous product"
+            >
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+            <button
+              className="hero-next absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-white/90 hover:bg-white text-primary rounded-full p-2 sm:p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+              aria-label="Next product"
+            >
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+
+            {/* Carousel Indicators */}
+            <div className="flex justify-center gap-2 mt-6">
+              {staticProducts.map((_, index) => (
+                <button
+                  key={index}
+                  className={`h-2 rounded-full transition-all duration-300 ${index === activeIndex
+                    ? 'bg-white w-8'
+                    : 'bg-white/40 w-2 hover:bg-white/60'
+                    }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -108,6 +104,67 @@ export default function HeroContent() {
         </svg>
       </div>
     </section>
+  );
+}
+
+interface ProductCardProps {
+  product: typeof staticProducts[0];
+  index: number;
+}
+
+function ProductCard({ product, index }: ProductCardProps) {
+  return (
+    <div className="group bg-white rounded-2xl lg:rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 h-full flex flex-col">
+      {/* Product Image Container */}
+      <div className="relative aspect-square bg-gradient-to-br from-[hsl(var(--primary))]/5 to-[hsl(var(--primary))]/10 flex items-center justify-center overflow-hidden p-4 sm:p-6 lg:p-4 xl:p-6">
+        <div className="relative w-full h-full flex items-center justify-center">
+          <Image
+            src={product.mainImage?.url || '/products/handcream/hand-cream.webp'}
+            alt={product.mainImage?.altText || product.name}
+            fill
+            className="object-contain transition-transform duration-500 group-hover:scale-110"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            priority={index < 2}
+          />
+        </div>
+
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary))]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </div>
+
+      {/* Product Info */}
+      <div className="p-4 sm:p-5 lg:p-4 xl:p-5 flex flex-col flex-1">
+        <div className="flex-1 space-y-2 sm:space-y-3">
+          <h3 className="text-lg sm:text-xl lg:text-lg xl:text-xl font-bold text-gray-900 group-hover:text-primary transition-colors duration-300 overflow-hidden" style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            textOverflow: 'ellipsis'
+          }}>
+            {product.name}
+          </h3>
+
+          {/* Price */}
+          <div className="pt-2">
+            <span className="text-xl sm:text-2xl lg:text-xl xl:text-2xl font-bold text-primary">
+              ₹{product.price}
+            </span>
+          </div>
+        </div>
+
+        {/* CTA Button */}
+        <Button
+          asChild
+          size="sm"
+          className="mt-4 sm:mt-5 lg:mt-4 xl:mt-5 bg-primary hover:bg-primary/90 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 group-hover:scale-105 w-full"
+        >
+          <Link href={`/products/${product.slug}`}>
+            Shop Now
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Link>
+        </Button>
+      </div>
+    </div>
   );
 }
 

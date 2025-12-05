@@ -1,6 +1,6 @@
 export const staticProducts = [
   {
-    id: '1',
+    id: 'dfe84d23-ea4b-4d6d-b174-b40a6f599ff9',
     name: 'Barely There SPF Lotion',
     slug: 'barely-there-spf-lotion',
     sku: 'SNS-SPF-250',
@@ -24,8 +24,8 @@ export const staticProducts = [
     ingredients: `<p>Aqua, Ethylhexyl Methoxycinnamate, Homosalate, Propylene Glycol, Octocrylene, Benzophenone 3, Glycerin, Stearic Acid, Cetearyl Alcohol, Isopropyl Myristate, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Niacinamide, Caprylic/Capric Triglyceride, Sodium Hyaluronate, Glyceryl Stearate Se, C12-15 Alkyl Benzoate, Dicaprylyl Carbonate, Bis-Ethylhexyloxyphenol Methoxyphenyl Triazine, Methylene Bis-Benzotriazolyl Tetramethylbutylphenol (And) Aqua (And) Decyl Glucoside (And) Propylene Glycol (And), Sodium Pyrrolidone Carboxylic Acid, Hydroxyethyl Urea, Squalane, Dimethicone, Phenoxyethanol (And) Ethylhexylglycerin, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Aloe Vera Extract, Cetyl Alcohol, Cucumber Extract, Green Tea Extract, Mulberry Extract, Sunflower Oil, Shea Butter, Argan Oil, Allantoin, Panthenol, Titanium Dioxide, Jojoba Oil, Vitamin E, Peg-7 Glyceryl Cocoate (And) Phenoxyethanol (And) Water, Sandalwood Oil, Sodium Gluconate.</p>
 <p><strong>Caution:</strong> This product may contain ingredients that could cause skin irritation in some individuals. Test on a small area before use.</p>
 <p>For external use only. Store in a dry cool place away from sunlight.</p>`,
-    // price: 855,
-    price: 2,
+    price: 855,
+
     featured: true, // Featured product flag
     mainImage: {
       url: '/products/spf-lotion/1.webp',
@@ -60,7 +60,7 @@ export const staticProducts = [
     },
   },
   {
-    id: '2',
+    id: 'ac8281ad-7cdf-4955-8677-282d43702c26',
     name: 'Foot Cream',
     slug: 'foot-cream',
     sku: 'SNS-FC-075',
@@ -117,7 +117,7 @@ export const staticProducts = [
     },
   },
   {
-    id: '3',
+    id: 'efc88316-2558-4d2e-8f6e-901c7d80084f',
     name: 'Age Defying Lotion',
     slug: 'age-defying-lotion',
     sku: 'SNS-ADL-001',
@@ -178,7 +178,7 @@ export const staticProducts = [
     },
   },
   {
-    id: '4',
+    id: 'b6f0e29c-4c14-41fb-a569-48ac480b1a82',
     name: 'Hand & Foot Scrub',
     slug: 'hand-foot-scrub',
     sku: 'SNS-HFS-100',
@@ -240,7 +240,7 @@ export const staticProducts = [
     },
   },
   {
-    id: '5',
+    id: 'ebff1add-47c9-4e6e-992a-b4bdc3257baa',
     name: 'Hand Cream',
     slug: 'hand-cream',
     sku: 'SNS-HC-050',

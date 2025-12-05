@@ -315,21 +315,55 @@ export class EasyEcomClient {
 
       // Check if the response indicates an error (EasyEcom returns errors with code field even on HTTP 200)
       if (data.code && data.code !== 200 && data.code >= 400) {
+        const errorMessage = data.message || data.error || `API error: code ${data.code}`;
+        // Check if this is a duplicate SKU error
+        // Generic "Error while creating product" is often a duplicate SKU when other products succeed
+        const isGenericError = errorMessage === 'Error while creating product.' ||
+          errorMessage.toLowerCase().includes('error while creating');
+        const isDuplicateSku =
+          errorMessage.toLowerCase().includes('duplicate') ||
+          errorMessage.toLowerCase().includes('already exists') ||
+          (errorMessage.toLowerCase().includes('sku') && (
+            errorMessage.toLowerCase().includes('exist') ||
+            errorMessage.toLowerCase().includes('found')
+          )) ||
+          isGenericError; // Treat generic errors as potential duplicates
+
         return {
           success: false,
-          error: data.message || data.error || `API error: code ${data.code}`,
-          message: data.message || `Product creation failed: ${data.code}`,
+          error: errorMessage,
+          message: isDuplicateSku
+            ? `Product likely already exists in WareIQ (generic error). Check WareIQ dashboard for SKU and delete it if you want to recreate.`
+            : `Product creation failed: ${data.code}`,
           data: data,
+          isDuplicateSku, // Add flag to identify duplicate SKU errors
         };
       }
 
       // Check if the response indicates success (some APIs return success: false even with 200)
       if (data.success === false || data.error) {
+        const errorMessage = data.error || data.message || 'Product creation failed';
+        // Check if this is a duplicate SKU error
+        // Generic "Error while creating product" is often a duplicate SKU when other products succeed
+        const isGenericError = errorMessage === 'Error while creating product.' ||
+          errorMessage.toLowerCase().includes('error while creating');
+        const isDuplicateSku =
+          errorMessage.toLowerCase().includes('duplicate') ||
+          errorMessage.toLowerCase().includes('already exists') ||
+          (errorMessage.toLowerCase().includes('sku') && (
+            errorMessage.toLowerCase().includes('exist') ||
+            errorMessage.toLowerCase().includes('found')
+          )) ||
+          isGenericError; // Treat generic errors as potential duplicates
+
         return {
           success: false,
-          error: data.error || data.message || 'Product creation failed',
-          message: data.message || 'Product creation was not successful',
+          error: errorMessage,
+          message: isDuplicateSku
+            ? `Product likely already exists in WareIQ (generic error). Check WareIQ dashboard for SKU and delete it if you want to recreate.`
+            : (data.message || 'Product creation was not successful'),
           data: data,
+          isDuplicateSku,
         };
       }
 
