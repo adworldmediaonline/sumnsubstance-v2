@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function WareIQTestPage() {
   const [loading, setLoading] = useState(false);
-  const [testType, setTestType] = useState<'auth' | 'order'>('auth');
+  const [testType, setTestType] = useState<'auth' | 'order' | 'product-create' | 'exact-payload'>('auth');
   const [result, setResult] = useState<{
     success: boolean;
     message?: string;

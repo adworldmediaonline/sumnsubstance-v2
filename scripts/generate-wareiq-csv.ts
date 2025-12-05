@@ -68,7 +68,7 @@ function generateCSVRow(product: typeof staticProducts[0]): string {
   row.push(escapeCSV('SumNSubstance'));
 
   // Category* - Required (extract from product.category or use default)
-  const category = product.category || 'Skincare';
+  const category = product.category?.name || 'Skincare';
   row.push(escapeCSV(category));
 
   // Model Name
