@@ -5,7 +5,6 @@ import HeroContent from '../../components/home/hero-content';
 export default function Home() {
   // Filter out the featured product from the products section since it's shown in hero
   const productsForSection = staticProducts
-    .filter(product => !product.featured)
     .map(product => ({
       ...product,
       isWishlisted: false,

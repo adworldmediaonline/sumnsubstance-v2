@@ -41,25 +41,7 @@ export function FeaturedProductsClient({
     setQuantities(prev => ({ ...prev, [productId]: 1 }));
   };
 
-  const handleToggleWishlist = (productId: string) => {
-    console.log('Toggle wishlist:', productId);
-  };
 
-  const handleShare = (product: StaticProduct) => {
-    if (navigator.share) {
-      navigator.share({
-        title: product.name,
-        // text: product.excerpt,
-        url: `/products/${product.slug}`,
-      });
-    } else {
-      // Fallback for browsers that don't support Web Share API
-      navigator.clipboard.writeText(
-        `${window.location.origin}/products/${product.slug}`
-      );
-      console.log('Product link copied to clipboard');
-    }
-  };
 
   const updateQuantity = (productId: string, change: number) => {
     setQuantities(prev => ({
