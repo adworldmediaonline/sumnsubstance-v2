@@ -102,9 +102,9 @@ export default function DealsSection() {
                     ₹{deal.originalPrice.toLocaleString()}
                   </span>
                 </div>
-                <div className="text-sm text-[hsl(var(--primary))] font-medium mb-4">
+                {/* <div className="text-sm text-[hsl(var(--primary))] font-medium mb-4">
                   {deal.specialNote || `Save ₹${deal.savings} • Free Shipping`}
-                </div>
+                </div> */}
                 <Button className={`w-full ${deal.buttonStyle}`}>
                   {deal.buttonText}
                 </Button>
@@ -114,7 +114,7 @@ export default function DealsSection() {
         </div>
 
         {/* Deal Banner */}
-        <div className="mt-12 bg-primary rounded-2xl p-8 text-center text-white">
+        {/* <div className="mt-12 bg-primary rounded-2xl p-8 text-center text-white" >
           <h3 className="text-2xl font-bold mb-2">
             🎁 Free Gift with Every Order Above ₹899
           </h3>
@@ -132,7 +132,7 @@ export default function DealsSection() {
               ✓ Easy Returns
             </span>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

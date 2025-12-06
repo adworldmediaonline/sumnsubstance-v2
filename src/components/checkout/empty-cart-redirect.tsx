@@ -78,9 +78,9 @@ export function EmptyCartRedirect() {
                   <span className="text-blue-600 font-bold">🚚</span>
                 </div>
                 <p className="font-medium">Fast Delivery</p>
-                <p className="text-muted-foreground text-xs">
+                {/* <p className="text-muted-foreground text-xs">
                   Free shipping over ₹500
-                </p>
+                </p> */}
               </div>
 
               <div className="space-y-2">

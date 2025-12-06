@@ -53,7 +53,7 @@ export default function Footer({ className = '' }: FooterProps) {
     {
       icon: Truck,
       title: 'Free Shipping',
-      description: 'Free Shipping on all domestic Products',
+      description: 'Free shipping on all Prepaid domestic orders',
     },
     {
       icon: Shield,
